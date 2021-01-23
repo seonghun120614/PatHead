@@ -7,8 +7,8 @@ wrapper {
   background:#e2e2e2;
 }
 header {
-  border-top:5px solid black;
-  border-bottom:5px solid black;
-  border-left:5px solid #444444;
-  border-right:5px solid #444444;
+  border-top:10px solid black;
+  border-bottom:10px solid black;
+  border-left:10px solid #444444;
+  border-right:10px solid #444444;
 }
