@@ -1,0 +1,14 @@
+*{
+  font-family:sans-serif;
+  padding:0;
+  margin:0;
+}
+wrapper {
+  background:#e2e2e2;
+}
+header {
+  border-top:2px solid black;
+  border-bottom:2px solid black;
+  border-left:2px solid #444444;
+  border-right:2px solid #444444;
+}
