@@ -1,5 +1,21 @@
+@font-face {
+  src: url("fonts/TextMeOne-Regular.ttf");
+  font-family:"Text Me One";
+}
+@font-face {
+  src: url("fonts/AvenirNextLTPro-It.otf");
+  font-family:"avenirnextltpro";
+}
+@font-face {
+  src: url("fonts/OstrichSans-Black.otf");
+  font-family:"ostrichsans";
+}
+@font-face {
+  src: url("fonts/De Valencia (beta).otf");
+  font-family:"devalencia";
+}
 *{
-  font-family:sans-serif;
+  font-family:"avenirnextltpro";
   padding:0;
   margin:0;
   color:white;
@@ -13,12 +29,15 @@ body{
   text-align: center;
   justify-items: center;
 }
-
-
+#title{
+  font-family:"Text Me One";
+  font-size:4em;
+}
 main{
   position:relative;
   display: flex;
 }
+
 main > aside{
   position:fixed;
   background : black;
@@ -31,6 +50,7 @@ main > aside{
   right:100%;
   top:0;
   transition:0.35s;
+  z-index: 2;
 }
 
 #menu_button{
@@ -43,14 +63,15 @@ main > aside{
   top:50%;
   width: 20px;
   height: 30px;
+  z-index: 1;
+  transition:0.35s;
 }
 #menu_button:hover + aside, aside:hover {
   right:calc(100% - 100px);
 }
-
 a{
   text-decoration: none;
-  color:black;
+  color:white;
 }
 
 footer{
@@ -59,7 +80,31 @@ footer{
   left:0;
   bottom:0;
   width:100vw;
-  text-align:center;
+  text-align:right;
   font-size:0.7em;
   color: black;
+}
+
+.container{
+  display:flex;
+  position:absolute;
+  width:100vw;
+  align-items:center;
+  justify-content: space-around;
+  flex-direction: row;
+  top: 500px;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+.item{
+  width:400px;
+  height:550px;
+  background:rgba(0,0,0,0.5);
+  text-align:center;
+  align-items:center;
+  color:white;
+  transition: transform .35s;
+}
+.item:hover{
+  transform:scale(1.1);
 }
