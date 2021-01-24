@@ -2,13 +2,64 @@
   font-family:sans-serif;
   padding:0;
   margin:0;
+  color:white;
 }
-wrapper {
-  background:#e2e2e2;
+body{
+  background-image:url("Moon.jpg");
+  background-repeat:no-repeat;
+  background-size:1920px 1200px;
 }
-header {
-  border-top:10px solid black;
-  border-bottom:10px solid black;
-  border-left:10px solid #444444;
-  border-right:10px solid #444444;
+#wrapper {
+  text-align: center;
+  justify-items: center;
+}
+
+
+main{
+  position:relative;
+  display: flex;
+}
+main > aside{
+  position:fixed;
+  background : black;
+  color: white;
+  text-align: center;
+  font-size :1.2em;
+  font-weight:800;
+  width:100px;
+  height:100vh;
+  right:100%;
+  top:0;
+  transition:0.35s;
+}
+
+#menu_button{
+  position: fixed;
+  background: rgba(0,0,0,0.5);
+  border-radius:0 15px 15px 0;
+  text-align:center;
+  padding-bottom:5px;
+  color:rgba(255,255,255,0.5);
+  top:50%;
+  width: 20px;
+  height: 30px;
+}
+#menu_button:hover + aside, aside:hover {
+  right:calc(100% - 100px);
+}
+
+a{
+  text-decoration: none;
+  color:black;
+}
+
+footer{
+  background:#444444;
+  position: absolute;
+  left:0;
+  bottom:0;
+  width:100vw;
+  text-align:center;
+  font-size:0.7em;
+  color: black;
 }
