@@ -14,6 +14,37 @@
   src: url("fonts/De Valencia (beta).otf");
   font-family:"devalencia";
 }
+
+@keyframes itemshow{
+  from{
+    opacity:0;
+    transform: translateY(-20px);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+article:nth-child(1){
+  animation : itemshow 0.5s;
+  animation-delay : 0.1s;
+  animation-fill-mode: backwards;
+}
+article:nth-child(2){
+  animation : itemshow 0.5s;
+  animation-delay : 0.2s;
+  animation-fill-mode: backwards;
+}
+article:nth-child(3){
+  animation : itemshow 0.5s;
+  animation-delay : 0.3s;
+  animation-fill-mode: backwards;
+}
+header{
+  animation: itemshow 0.5s;
+  animation-delay:0.4s;
+  animation-fill-mode:backwards;
+}
 *{
   font-family:"avenirnextltpro";
   padding:0;
@@ -21,7 +52,9 @@
   color:white;
 }
 body{
-  background:#ffe3de;
+  height:100vh;
+  background-repeat: no-repeat;
+  background: linear-gradient(135deg, #fff3e6 0%, #fff3e6 50%, rgba(255,227,222,1) 50%, rgba(255,227,222,1) 100%);
 }
 #wrapper {
   text-align: center;
@@ -30,6 +63,7 @@ body{
 #title{
   font-family:"Text Me One";
   font-size:4em;
+  color:#363636;
 }
 main{
   position:relative;
@@ -38,7 +72,7 @@ main{
 
 main > aside{
   position:fixed;
-  background : #0a043c;
+  background : black;
   color: white;
   text-align: center;
   font-size :1.2em;
@@ -90,19 +124,49 @@ footer{
   align-items:center;
   justify-content: space-around;
   flex-direction: row;
-  top: 500px;
+  top: 400px;
   left:50%;
   transform: translate(-50%, -50%);
 }
 .item{
   width:400px;
   height:550px;
+  position: relative;
   background:#a3ddcb;
   text-align:center;
   align-items:center;
   color:white;
-  transition: transform .35s;
+  transition: all .35s;
 }
-.item:hover{
+
+.item:hover {
   transform:scale(1.1);
+  box-shadow:0px 0px 20px 0px #363636;
+}
+
+.frame {
+  background : #fdfdfd;
+  position : relative;
+  width : 90%;
+  height: 80%;
+  left:50%;
+  top:40%;
+  border-radius: 5px;
+  transform : translate(-50%,-50%)
+}
+.rectangle{
+  background: white;
+  border:10px solid black;
+  border-radius: 5px 5px 0 0;
+}
+.rectangle:before{
+  position:absolute;  
+  font-family:"Text Me One";
+  content: '⬜ P A T H E A D';
+  transform : translate(-180px,-10px);
+}
+.rectangle:after{
+  position: absolute;
+  content: '❌';
+  transform : translate(160px,-10px);
 }
