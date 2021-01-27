@@ -7,6 +7,9 @@
     <meta name='description' content='My Study Idea Chest'/>
     <meta name='author' content='Park seonghun'/>
     <link rel="stylesheet" href="style.css"><link>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="js.js"></script>
     <title> &lt; Pat's Head Blog &gt; </title>
 </head>
 <body>
@@ -16,7 +19,10 @@
         </header><!--Header-->
         <main>
             <h2 id='menu_button'>&gt;</h2>
-            <aside>MENU</aside>
+            <aside>
+                ONLINE<br>CHATTING
+                <div id="chatting"><!--채팅코드--></div>
+            </aside>
             <section class="container">
                 <article class="item">
                     <br>
@@ -24,18 +30,17 @@
                     <br>
                     <p>For my dreams</p>
                     <div class="frame">
-                        <div class='rectangle'>
-                            <div class="circle color1"></div>
-                            <div class="paper_frame"></div>
-                            <div class="paper_rectangle"></div>
-                            <div class="paper_content1"></div>
-                            <div class="paper_content1"></div>
-                            <div class="paper_content2"></div>
-                            <div class="paper_content2"></div>
-                            <div class="paper_content2"></div>
-                            <div class="paper_content2"></div>
-                            <div class="paper_content3"></div>
-                        </div>
+                        <div class='rectangle'></div>
+                        <div class="circle color1"></div>
+                        <div class="paper_frame"></div>
+                        <div class="paper_rectangle"></div>
+                        <div class="paper_content1"></div>
+                        <div class="paper_content1"></div>
+                        <div class="paper_content2"></div>
+                        <div class="paper_content2"></div>
+                        <div class="paper_content2"></div>
+                        <div class="paper_content2"></div>
+                        <div class="paper_content3"></div>
                     </div>
                 </article>
                 <article class="item">
@@ -77,6 +82,13 @@
                 seonghun120614@gmail.com</a>
             </address>
         </footer><!--footer-->
+    </div>
+    <div id="modal">
+        <div id="modal_frame">
+            <div id="modal_content">
+                <div id="like_button_container"></div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

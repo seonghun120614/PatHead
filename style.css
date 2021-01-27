@@ -54,7 +54,7 @@ header{
 body{
   height:100vh;
   background-repeat: no-repeat;
-  background: linear-gradient(135deg, #fff3e6 0%, #fff3e6 50%, rgba(255,227,222,1) 50%, rgba(255,227,222,1) 100%);
+  background: linear-gradient(135deg, #fff 0%, #fff 50%, rgba(255,227,222,1) 50%, rgba(255,227,222,1) 100%);
 }
 #wrapper {
   text-align: center;
@@ -72,12 +72,12 @@ main{
 
 main > aside{
   position:fixed;
-  background : black;
+  background:linear-gradient(180deg, #000 0%, #000 5%, #363636 5%, #363636 100%);
   color: white;
   text-align: center;
   font-size :1.2em;
   font-weight:800;
-  width:100px;
+  width:300px;
   height:100vh;
   right:100%;
   top:0;
@@ -99,7 +99,7 @@ main > aside{
   transition:0.35s;
 }
 #menu_button:hover + aside, aside:hover {
-  right:calc(100% - 100px);
+  right:calc(100% - 300px);
 }
 a{
   text-decoration: none;
@@ -169,4 +169,68 @@ footer{
   position: absolute;
   content: '❌';
   transform : translate(160px,-10px);
+}
+textarea {
+    font-size: .8rem;
+    letter-spacing: 1px;
+    padding: 10px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+#chatting{
+    display:flex;
+    flex-direction : column-reverse;
+    height:100%;
+    width:100%;
+}
+#modal{
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background:rgb(0,0,0,0.5);
+}
+#modal_frame{
+    display:block;
+    position:absolute;
+    width:650px;
+    height:450px;
+    background:transparent;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    border:5px solid black;
+    border-top : 30px solid black;
+    border-radius : 5px;
+    box-shadow: 8px 8px 10px #363636;
+}
+#modal_frame:before{
+  position:absolute;  
+  font-family:"Text Me One";
+  background:black;
+  transform : translate(0px,-25px);
+  content: '⬜ P A T H E A D';
+}
+#modal_frame:after{
+  position: absolute;
+  content: '❌';
+  transform : translate(630px,-30px);
+}
+#modal_content{
+    display:block;
+    position:absolute;
+    width:650px;
+    height:450px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#fff;
 }
