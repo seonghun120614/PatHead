@@ -187,7 +187,7 @@ label {
 }
 #modal{
     display:none;
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     width:100vw;
@@ -219,11 +219,12 @@ label {
 #modal_content{
     display:inherit;
     position:absolute;
-    width:650px;
-    height:450px;
+    width:inherit;
+    height:inherit;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
+    color :black;
     background:#fff;
 }
 #modal_button{
@@ -253,5 +254,30 @@ label {
         height:2000px;
         background-repeat: no-repeat;
         background: linear-gradient(135deg, #fff 0%, #fff 50%, rgba(255,227,222,1) 50%, rgba(255,227,222,1) 100%);
+    }
+    #modal_frame{
+        display:inherit;
+        position:absolute;
+        width:320px;
+        height:480px;
+        background:transparent;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        border:5px solid black;
+        border-top : 30px solid black;
+        border-radius : 5px;
+        box-shadow: 8px 8px 10px #363636;
+    }
+    #modal_button{
+        display:inherit;
+        position:absolute;
+        width:50px;
+        height:50px;
+        background:transparent;
+        top:50%;
+        left:50%;
+        cursor:pointer;
+        transform: translate(calc(-50% + 165px),calc(-50% - 230px));
     }
 }

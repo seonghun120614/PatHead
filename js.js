@@ -1,22 +1,26 @@
 'use strict'
 
-let modal_status = false;
+class Modal {
 
-function modal_switch() {
-    if (modal_status === false) {
-        modal_status = true;
-        document.getElementById('modal').style.display = 'block';
-    } else {
-        modal_status = false;
-        document.getElementById('modal').style.display = 'none';
+    constructor(content, status) {
+        this.content = content;
+        this.status = false;
+    }
+    static switch() {
+        if (this.status === false) {
+            this.status = true;
+            document.getElementById('modal_content').textContent = 'hi';
+            document.getElementById('modal').style.display = 'block';
+        } else {
+            this.status = false;
+            document.getElementById('modal').style.display = 'none';
+        }
     }
 }
 
+
+
 window.onload = function() {
-    document.querySelector('.item').onclick = function() {
-        modal_switch();
-    }
-    document.querySelector('#modal_button').onclick = function() {
-        modal_switch();
-    }
+    for (let i=1; i<4; i++) {document.querySelector('.item:nth-child(' + i + ')').onclick = function(){Modal.switch();}}
+    document.querySelector('#modal_button').onclick = function() {Modal.switch();}
 }
