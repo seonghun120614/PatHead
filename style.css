@@ -1,4 +1,7 @@
-
+@font-face {
+  src: url("fonts/BMHANNA_11yrs_ttf.ttf");
+  font-family:'한나는11살';
+}
 @font-face {
   src: url("fonts/TextMeOne-Regular.ttf");
   font-family:"Text Me One";
@@ -221,18 +224,26 @@ label {
   content: '⬜ P A T H E A D';
 }
 #modal_content{
-    display:inherit;
-    position:absolute;
-    width:inherit;
-    height:inherit;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    color : black;
-    background:#fff;
+  display:grid;
+  grid-template-columns : 1fr 3fr;
+  position:absolute;
+  width:inherit;
+  height:inherit;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color : black;
+  background:#fff;
 }
-#modal_content>*{
-    color : black;
+h2{
+  color :black;
+}
+#modal_menu, #modal_article{
+  color:black;
+  font-size : 1.4em;
+}
+#modal_menu{
+  background : #363636;
 }
 #modal_button{
     display:inherit;
@@ -275,6 +286,18 @@ label {
         border-top : 30px solid black;
         border-radius : 5px;
         box-shadow: 8px 8px 10px #363636;
+    }
+    #modal_content{
+      display:grid;
+      grid-template-rows: auto;
+    }
+    h1{
+      color :black;
+    }
+    #modal_article, #modal_menu{
+      font-size : 1.2em;
+      color : black;
+      background : transparent;
     }
     #modal_button{
         display:inherit;

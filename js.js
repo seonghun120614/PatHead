@@ -16,26 +16,48 @@ class Modal {
     }
 }
 
-
-
 window.onload = function() {
-    let data;
-    var ourRequest = new XMLHttpRequest();
-    ourRequest.open('GET', 'Data.json');
-    alert(ourRequest.responseText);
 
+    function DataParsing(path, content_num) {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'https://seonghun120614.github.io/PatHead/Data.json');
+        request.responseType = 'json';
+        request.send()
+        request.onload = function(){
+            const data = request.response;
+            const Menu = data[path]["menu"];
+            const content = data[path]["content"][content_num];
+            const title = content['title'];
+            const paragraph = content['paragraph'];
+            const info = content['info'];
+
+            let show = `<h2>${title}</h2><hr>`
+            for (let i=0; i<paragraph.length; i++){
+                show =show + paragraph[i] + "<hr>";
+            }
+            
+            let menu = '<ol>';
+            for (let i=0;i<Menu.length;i++) {
+                menu = menu + Menu[i];
+            }
+            menu = menu + '</ol>';
+            
+            document.getElementById('modal_article').innerHTML = show;
+            document.getElementById('menu').innerHTML = menu;
+            document.getElementById('modal_footer').innerHTML = `${info.date}<br>${info.mind}`;
+        }
+    }
 
     for (let i=1; i<4; i++) {document.querySelector('.item:nth-child(' + i + ')').onclick = function(){
         Modal.switch();
         switch (i) {
             case 1 :
-                readTextFile("Data/Study/index.txt");
+                DataParsing("Study","0");
                 break;
             case 2 :
-                readTextFile("Data/Rest/index.txt");
+                DataParsing("Rest","0");
                 break;
             case 3 :
-                readTextFile("Data/Inf/index.txt");
                 break;
         }
     }}
