@@ -117,6 +117,9 @@ footer{
   font-size:0.7em;
   color: black;
 }
+#footer{
+    padding-right:20px;
+}
 .container{
   display:flex;
   position:absolute;
@@ -141,6 +144,7 @@ footer{
 
 .item:hover {
   transform:scale(1.1);
+  z-index : 3;
   box-shadow:0px 0px 20px 0px #363636;
 }
 
@@ -198,8 +202,8 @@ label {
 #modal_frame{
     display:inherit;
     position:absolute;
-    width:650px;
-    height:450px;
+    width:1200px;
+    height:750px;
     background:transparent;
     top:50%;
     left:50%;
@@ -224,8 +228,11 @@ label {
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    color :black;
+    color : black;
     background:#fff;
+}
+#modal_content>*{
+    color : black;
 }
 #modal_button{
     display:inherit;
@@ -236,7 +243,7 @@ label {
     top:50%;
     left:50%;
     cursor:pointer;
-    transform: translate(calc(-50% + 325px),calc(-50% - 215px));
+    transform: translate(calc(-50% + 600px),calc(-50% - 365px));
 }
 @media screen and (max-width: 1200px) {
     .container{
