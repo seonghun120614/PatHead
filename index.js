@@ -1,13 +1,11 @@
-const express = require('express');
-const app = express();
+var express = require('express');
+var app = express();
 
-app.get('/', function(req, res) {
-    res.send('Hello World');
-});
-
-var server = app.listen(80, function() {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Server is working : PORT - ', port);
+app.set('port', (process.env.PORT || 5000));
+app.get('/', function (req, res) {
+  res.send('Hello World');
 })
+
+app.listen(app.get('port'), function () {
+  console.log('App is running, server is listening on port ', app.get('port'));
+});
