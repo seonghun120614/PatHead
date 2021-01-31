@@ -11,5 +11,5 @@
   "dependencies": {
     "express": "^4.17.1"
   }
-  "start": "node index.js" 
+  "start" : "node index.js" 
 }
