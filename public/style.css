@@ -1,0 +1,123 @@
+*{
+    margin : 0;
+    padding : 0;
+    color : black;
+    text-decoration : none;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+@keyframes init {
+    from {
+        margin-top : 30px;
+    }
+    to {
+        margin-top : 0;
+    }
+}
+@keyframes init1{
+    from {
+        opacity:0;
+        margin-top : 30px;
+    }
+    to {
+        opacity:1;
+        margin-top : 0;
+    }
+}
+
+
+
+body{
+    height:100vh;
+    width:100vw;
+    background-repeat: no-repeat;
+    background: linear-gradient(135deg, #fff 0%, #fff 50%, #ffdada 50%, #ffdada 100%);
+}
+
+
+
+header{
+    position :absolute;
+    text-align : center;
+    font-size : 1.5em;
+    display : block;
+    right: 50%;
+    transform : translate(50%,0);
+    animation : init 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+
+
+aside{
+    position : relative;
+    text-align : center;
+    font-size : 1.2em;
+    display : block;
+    height : 100vh;
+    width : 300px;
+    z-index : 1;
+    background : #222841;
+    color : white;
+    left : -300px;
+    transition : all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+#aside_button{
+    position :absolute;
+    text-align: center;
+    font-weight: 900;
+    display:block;
+    width : 30px;
+    height : 35px;
+    left : 100%;
+    top : 50%;
+    padding-top :3px;
+    background : #222841;
+    border-radius : 0 15px 15px 0;
+}
+#aside_button:hover, aside:hover {
+    left : 0px;
+}
+
+
+
+footer{
+    position : absolute;
+    text-align: right;
+    width : 100vw;
+    height : auto;
+    bottom : 0;
+    background : #363636;
+    color : white;
+    font-size : 1em;
+}
+footer > h2{
+    font-size:1em;
+}
+
+
+
+#window {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    border-radius : 20px;
+    background :white;
+    box-shadow : black 0px 0px 20px;
+    width : 80vw;
+    height : 80vh;
+    animation : init1 1s;
+}
+
+nav {
+    display: flex;
+}
+ul {
+    text-decoration: none;
+}
+
+article {
+    width : 90%;
+    height : 80%;
+    box-shadow : #262626 5px 5px; 
+}
