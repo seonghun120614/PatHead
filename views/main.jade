@@ -19,14 +19,38 @@ html
                 div(id='aside_chatting')
             div(id='window')
                 nav
-                    ul
-                        li Study
+                    ul(class='list')
+                        li Study 
+                            ul(class="contents")
+                                li 
+                                    a Computer
+                                li
+                                    a Statistics
+                                li
+                                    a Math
+                                li
+                                    a AI
+                                li
+                                    a DT
                         li Rest
-                        li My Drive
-                        li MY Inf.
+                            ul(class="contents")
+                                li
+                                    a Free!
+                                li
+                                    a Game
+                                li 
+                                    a Life
+                                li 
+                                    a Style
+                                li 
+                                    a Trip
+                        li
+                            a My Drive
+                        li
+                            a MY Inf.
                 article
-                    h3(id='title')
-                    p(id='description')
+                    h3(id='title')= title
+                    p(id='description')= description
         footer
             h2 web info.
             address

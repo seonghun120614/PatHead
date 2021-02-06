@@ -1,10 +1,18 @@
+@font-face {
+    src : '/workspace/PatHead/fonts/De Valencia (beta).otf';
+    font-family: 'devalencia';
+}
+
 *{
     margin : 0;
     padding : 0;
     color : black;
     text-decoration : none;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'devalencia';
 }
+li { color :white;}
+ul { list-style: none;}
+a {color :white;}
 
 @keyframes init {
     from {
@@ -41,6 +49,7 @@ header{
     text-align : center;
     font-size : 1.5em;
     display : block;
+    width : 100vw;
     right: 50%;
     transform : translate(50%,0);
     animation : init 1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -109,15 +118,36 @@ footer > h2{
     animation : init1 1s;
 }
 
+
+
 nav {
-    display: flex;
+    text-decoration: block;
+    width : 100%;
+    height : 25px;
+    text-align : center;
+    border-radius : 20px 20px 0 0;
+    background : linear-gradient(#363636 25px, rgba(0,0,0,0.5) 25px);
+    overflow : hidden;
+    transition : height 0.35s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-ul {
-    text-decoration: none;
+nav:hover {height : 130px; cursor:default;}
+.list {
+    display :grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+.list > li {
+    width : calc(inherit/4);
+    height : 25px;
+    vertical-align: middle;
+}
+.list > li:first-child {border-radius : 20px 0 0 0;}
+.list > li:last-child{border-radius : 0 20px 0 0;}
+.contents > li{cursor:pointer;}
 
 article {
-    width : 90%;
-    height : 80%;
-    box-shadow : #262626 5px 5px; 
+    position : absolute;
+    display : block;
+    right : 2.5%;
+    left : 2.5%;
+    width : 95%;
 }
