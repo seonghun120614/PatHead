@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const assert = require('assert');
 const url = 'mongodb://220.83.97.41:27017/phdb';
 
+/*
 function connect_mongodb(response){
     async.waterfall([
         function(callback){
@@ -123,24 +124,78 @@ function dropindex(db, callback){
         callback(null, 'drop index success');
     });
 }
+*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(express.static('public'));
+app.use(express.static('fonts'));
 app.locals.pretty = true;
 
 app.get('/', function(req, res){
     res.render('main', {title:"다양한 블로그 PAT Head", description :"여기는 메인 화면입니다."});
 });
 
-app.post('/connect_mongodb', function(req, res){
-    console.log('connect mongodb...');
+app.get('/write', function(req, res){
 
-
-    connect_mongodb(res);
+    res.render('main', {title:'Title.', description:"Cont."})
+});
+app.post('/menu/:topic/:field/:id/write', function(req, res){
+    let title = req.body.title;
+    let description = req.body.description;
+    let url = `menu/${req.params.topic}/${req.params.field}/${req.params.index}/${req.params.id}/`;
+    fs.writeFile(url+title, description, function(err){
+        if(err){
+            res.status(500).send('Interval server error');
+        }
+        res.redirect(url+title);
+    });
+});
+app.get('/menu/:topic/:field/:id',function(req, res){
+    let path = 'menu/'+req.params.topic+'/'+req.params.field+'/'+req.params.id;
+    if (req.params.topic==="study"){
+        fs.readdir(path + '/', function(err, files){
+            if(err){
+                console.log(err);
+                res.send('err');
+            }
+            let title = req.params.id;
+            let description = files;
+            res.render('main', {title:title, description:description, topic:req.params.topic});
+        });
+    } else {
+        fs.readFile(path, {encoding:'utf-8'}, function(err, data){
+            if(err){
+                console.log(err);
+                res.send('err');
+            }
+            let title = req.params.id;
+            let description = data;
+            res.render(title, description);
+        })
+    }
 })
+app.get('/menu/:topic/:field', function(req, res){
+    let title = req.params.field;
+    fs.readdir('menu/'+req.params.topic+'/'+title+'/', function(err, files){
+        if(err){
+            console.log(err);
+            res.send('err');
+        }
+        let description = files;
+        res.render('main', {title:title, description:description, topic:req.params.topic});
+    });
+});
+
+app.get('/drive', function(req, res){
+    res.render('main', {title:'drive', description: 'my chest'});
+});
+
+app.get('/inf', function(req, res){
+    res.render('main', {title:'MY Information', description:'blur blurblur'});
+});
 
 app.listen(3000, () => {
     console.log('Server open port : 3000');

@@ -1,5 +1,45 @@
+#write{
+    position : absolute;
+    width : 90px;
+    height:35px;
+    text-align :center;
+    border-radius : 20px 0 20px 0 ;
+    font-size : 1.4em;
+    display : block;
+    background: #000E61;
+    color : white;
+    bottom:0;
+    right :0;
+}
+#title{
+    height : 25px;
+    font-size:1.6em;
+    font-weight:900;
+    width : 70vw;
+}
+#description{
+    resize:none;
+    position : absolute;
+    display:block;
+    top : 50px;
+    right : 50%;
+    width : 70vw;
+    transform : translate(50%,23px);
+    height : 500px;
+}
+#submit{
+    position :absolute;
+
+    width : 50px;
+    height : 50px;
+    border :none;
+    background :#008000;
+    border-radius:20px 0 20px 0 ;
+    color : white;
+    z-index:1;
+}
 @font-face {
-    src : '/workspace/PatHead/fonts/De Valencia (beta).otf';
+    src : '/fonts/De Valencia (beta).otf';
     font-family: 'devalencia';
 }
 
@@ -12,21 +52,16 @@
 }
 li { color :white;}
 ul { list-style: none;}
-a {color :white;}
+.menu{color:white;}
 
 @keyframes init1{
     from {
         opacity:0;
-        margin-top : 30px;
     }
     to {
         opacity:1;
-        margin-top : 0;
     }
 }
-
-
-
 body{
     height:100vh;
     width:100vw;
