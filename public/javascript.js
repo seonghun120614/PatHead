@@ -1,2 +1,6 @@
 var request = new XMLHttpRequest();
-request.open('GET', '')
+
+async function take_out(url){
+    request.open('GET', url);
+    request.responseType = 'Json'
+}
