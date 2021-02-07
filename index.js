@@ -139,7 +139,6 @@ app.get('/', function(req, res){
 });
 
 app.get('/write', function(req, res){
-
     res.render('main', {title:'Title.', description:"Cont."})
 });
 app.post('/menu/:topic/:field/:id/write', function(req, res){

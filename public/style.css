@@ -17,6 +17,10 @@
     font-weight:900;
     width : 70vw;
 }
+#path{
+    display :grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
 #description{
     resize:none;
     position : absolute;

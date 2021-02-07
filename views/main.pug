@@ -60,6 +60,24 @@ html
                         else if title=="Title."
                             br
                             form(action="uploads" method="post")
+                                div(id="path")
+                                    div
+                                        label(for="menu") Choose Menu:
+
+                                        select(id="menu")
+                                            option(value="") --Please choose an option--
+                                            option(value="rest") Rest
+                                            option(value="study") Study
+                                    div
+                                        label(for="field") Choose Field:
+
+                                        select(id="field")
+                                            option(value="") --Please choose an option--
+                                    div
+                                        label(for="id") Choose Index :
+
+                                        select(id="id")
+                                            option(value="") --Please choose an option--
                                 p
                                     h3= title
                                         input(id="title" type="text" name="title" placeholder="Title")

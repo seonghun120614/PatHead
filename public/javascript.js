@@ -14,7 +14,24 @@ function show_Contents(title, description){
     }
 }
 
+function write_Path(e){
+    let menu=['rest','study'];
+
+    let rest=['free', 'game', 'life', 'style', 'trip'];
+    let study = ['ai','computer','data technology','math','statistics'];
+
+    let ai = ['deep learning', 'reinforcement learning', 'supervised learning', 'unsupervised learning'];
+    let computer = ['c', 'css', 'html', 'java', 'javascript', 'python'];
+    let data_technology = ['data mining', 'data processing'];
+    let math = ['calculus', 'linear algebra', 'number theorem', 'set theorem'];
+    let statistics = ['inferential statistics', 'descriptive statistics'];
+
+
+    if(e.value in menu){}
+    else if(e.value in study){}
+};
 
 window.onload = function(){
     document.querySelector('#button').onclick = function(){show_Contents('hellow','hi')};
+    document.querySelector('#menu').setAttribute( 'onchange', 'write_Path(this)' )
 }
