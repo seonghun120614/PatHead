@@ -6,6 +6,7 @@ const ObjectId = require('mongodb').ObjectID;
 const bodyParser = require('body-parser');
 const assert = require('assert');
 const url = 'mongodb://220.83.97.41:27017/phdb';
+const entry = true;
 
 /*
 function connect_mongodb(response){
@@ -141,16 +142,20 @@ app.get('/', function(req, res){
 app.get('/write', function(req, res){
     res.render('main', {title:'Title.', description:"Cont."})
 });
-app.post('/menu/:topic/:field/:id/write', function(req, res){
-    let title = req.body.title;
-    let description = req.body.description;
-    let url = `menu/${req.params.topic}/${req.params.field}/${req.params.index}/${req.params.id}/`;
-    fs.writeFile(url+title, description, function(err){
-        if(err){
-            res.status(500).send('Interval server error');
-        }
-        res.redirect(url+title);
-    });
+app.post('/write', function(req, res){
+    if (entry){
+        let title = req.body.title;
+        let description = req.body.description;
+        let url = `menu/${req.params.topic}/${req.params.field}/${req.params.index}/${req.params.id}/`;
+        fs.writeFile(url+title, description, function(err){
+            if(err){
+                res.status(500).send('Interval server error');
+            }
+            res.redirect(url+title);
+        });
+    } else {
+        res.send('허가되지 않았습니다.');
+    }
 });
 app.get('/menu/:topic/:field/:id',function(req, res){
     let path = 'menu/'+req.params.topic+'/'+req.params.field+'/'+req.params.id;
