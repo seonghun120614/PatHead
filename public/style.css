@@ -14,14 +14,6 @@ li { color :white;}
 ul { list-style: none;}
 a {color :white;}
 
-@keyframes init {
-    from {
-        margin-top : 30px;
-    }
-    to {
-        margin-top : 0;
-    }
-}
 @keyframes init1{
     from {
         opacity:0;
@@ -52,7 +44,6 @@ header{
     width : 100vw;
     right: 50%;
     transform : translate(50%,0);
-    animation : init 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 
@@ -65,7 +56,7 @@ aside{
     height : 100vh;
     width : 300px;
     z-index : 1;
-    background : #222841;
+    background : rgba(0,0,0,0.5);
     color : white;
     left : -300px;
     transition : all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -80,7 +71,7 @@ aside{
     left : 100%;
     top : 50%;
     padding-top :3px;
-    background : #222841;
+    background : rgba(0,0,0,0.5);
     border-radius : 0 15px 15px 0;
 }
 #aside_button:hover, aside:hover {
