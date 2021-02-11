@@ -13,6 +13,8 @@ html
         header
             a(href="/")
                 h1 PAT HEAD BLOG
+            span(id="time")
+
         main
             aside ONLINE<br>CHATTING
                 div(id='aside_button') &gt;
@@ -52,45 +54,43 @@ html
                 article
                     - var description
                         if typeof(description)==="object"
-                            h3= title
+                            p(class="title")= title
                             each i in description
-                                a(href=path + "/"+i)
+                                a(href=title+"/"+i)
                                     p(class='description')= i
 
                         else if title=="Title."
-                            br
-                            form(action="uploads" method="post")
-                                div(id="path")
-                                    div
-                                        label(for="menu") Choose Menu:
-
-                                        select(id="menu")
-                                            option(value="") --Please choose an option--
-                                            option(value="rest") Rest
-                                            option(value="study") Study
-                                    div
-                                        label(for="field") Choose Field:
-
-                                        select(id="field")
-                                            option(value="") --Please choose an option--
-                                    div
-                                        label(for="id") Choose Index :
-
-                                        select(id="id")
-                                            option(value="") --Please choose an option--
-                                p
-                                    h3= title
-                                        input(id="title" type="text" name="title" placeholder="Title")
-                                p= description
-                                    textarea(id="description" name='description' placeholder="Contents")
-                                p
-                                    input(type='submit' id="submit")
+                            form(action="write" method="post" name='write')
+                                div(class="form_title")
+                                    h3(class="title")= title
+                                    p= description
+                                div(class="form_contents")
+                                    p
+                                        input(type='text' name='title' id="title")
+                                    p
+                                        input(type='text' name='description' id="description")
+                                    p
+                                        <select id="topic">
+                                            <option value="">  Dir.  </option>
+                                            <option value="study">Study</option>
+                                            <option value="rest">Rest</option>
+                                        </select>
+                                        <select id="field">
+                                            <option value="">  Dir.  </option>
+                                        </select>
+                                        <select id="subject">
+                                            <option value="">  Dir.  </option>
+                                        </select>
+                                    p
+                                        input(type='submit')
                                     
+
                         else
-                            h3= title
+                            p(class="title")= title
+                                span(class="time")= time
                             p(class="description")= description
                 a(href="/write")
-                    div(id='write') write
+                    div(id='write_button') write
         footer
             h2 web info.
             address

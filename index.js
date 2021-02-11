@@ -37,15 +37,10 @@ mongoose.connection.on('disconnected', ()=>{
 
 
 app.set('view engine', 'pug');
-
 app.set('views', './views');
-
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({extended:true}));
-
 app.use(express.static('public'));
-
 app.locals.pretty = true;
 
 
@@ -96,45 +91,35 @@ app.post('/write', function(req, res){
 app.get('/menu/:topic/:field', function(req, res){
     let topic = req.params.topic;
     let title = req.params.field;
-    
+    let path = `menu/${topic}/${title}/`
 
-    fs.readdir(path+'/', function(err, files){
-        if (err){
-            errChk(err);
-            res.send(err);
-        }
+    fs.readdir(path, function(err, files){
+        if (err){console.log(err);res.send(err);}
         let description = files;
-        res.render('main', {title:title, description:description, path:path});
+        res.render('main', {title:title, description:description});
     });
 
 });
 
-/* Study의 세부 과목들 구성 */
+/* Study의 세부 과목들 보여주기 */
 app.get('/menu/study/:field/:subject', (req, res)=>{
     let field = req.params.field;
     let subject = req.params.subject;
     
-    let path = `/menu/study/${field}/${subject}/`;
+    let path = `menu/study/${field}/${subject}`;
     fs.readdir(path, (err, files)=>{
-        if (err){
-            errChk(err);
-            res.send(err);
-        }
+        if (err){console.log(err); res.send(err);}
         let description = files;
         res.render('main',{title:subject, description:description});
     });
 });
 
-/* Rest의 게시글 보여주기 */
+/* Rest의 세부 항목들 보여주기 */
 app.get('/menu/rest/:field', (req, res)=>{
     let field = req.params.field;
-    let subject = req.params.subject;
-
+    let path = `menu/rest/${field}`
     fs.readFile(url, (err, data)=>{
-        if(err){
-            errChk(err);
-            res.send(err);
-        }
+        if(err){console.log(err);res.send(err);}
         let description = data;
         res.render('main',{title:subject, description:description});
     });
@@ -147,14 +132,49 @@ app.get('/menu/study/:field/:subject/:id', (req, res)=>{
     let subject = req.params.subject;
     let id = req.params.id;
 
-    let path = `/menu/study/${field}/${subject}/${id}`
+    let path = `menu/study/${field}/${subject}/${id}`
     fs.readFile(path, "utf8", (err, data)=>{
+        if (err){console.log(err);res.send(err);}
 
-        errChk(err);
+        fs.stat(path, (err, stats)=>{
+            if (err){console.log(err);res.send(err);}
 
-        res.render('main', {title:id, description:data});
+            let mtime = stats.mtime;
+            
+            let year = mtime.getFullYear();
+            let month = mtime.getMonth() + 1;
+            let date = mtime.getDate();
+
+            let hour = mtime.getHours();
+            let min = mtime.getMinutes();
+            let sec = mtime.getSeconds();
+
+            let Day = {0:"Sun", 1:"Mon", 2:"Tue", 3:'Wed', 4:'Thu', 5:'Fri', 6:'Sun'};
+            let day = Day[mtime.getDay()];
+
+            let time = `${year}-${month}-${date} ${hour}:${min}:${sec} (${day})`;
+
+            res.render('main', {title:id, description:data, time:time});
+        });
     });
-    
+});
+
+/* Rest의 게시글 보여주기 */
+app.get('/menu/rest/:field/:id', (req,res)=>{
+    let field = req.params.field;
+    let id = req.params.id;
+    let path = `menu/rest/${field}/${id}`;
+
+    fs.readFile(path, (err, data)=>{
+        if(err){console.log(err); res.send(err);}
+
+        fs.stat(path, (err, stats)=>{
+            if (err){console.log(err);res.send(err);}
+
+            let mtime = stats.mtime;
+            res.render('main', {title:id, description:data, time:mtime});
+        });
+    });
 });
 
 /* 드라이브 구성 */
@@ -177,9 +197,3 @@ app.listen(3000, () => {
     console.log('Server open port : 3000');
     
 });
-
-
-
-function errChk(err){
-    console.log(err);
-}
