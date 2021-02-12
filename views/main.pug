@@ -13,87 +13,90 @@ html
         header
             a(href="/")
                 h1 PAT HEAD BLOG
-            span(id="time")
+            span#time
 
         main
             aside ONLINE<br>CHATTING
-                div(id='aside_button') &gt;
-                div(id='aside_content')
-                div(id='aside_chatting')
-            div(id='window')
+                #aside_button &gt;
+                #aside_content
+                #aside_chatting
+            #window
                 nav
-                    ul(class='list')
+                    ul.list
                         li Study 
-                            ul(class="contents")
+                            ul.contents
                                 li 
-                                    a(class="menu" href="/menu/study/computer") Computer
+                                    a.menu(href="/menu/study/computer") Computer
                                 li
-                                    a(class="menu" href="/menu/study/statistics") Statistics
+                                    a.menu(href="/menu/study/statistics") Statistics
                                 li
-                                    a(class="menu" href="/menu/study/math") Math
+                                    a.menu(href="/menu/study/math") Math
                                 li
-                                    a(class="menu" href="/menu/study/ai") AI
+                                    a.menu(href="/menu/study/ai") AI
                                 li
-                                    a(class="menu" href="/menu/study/data technology") DT
+                                    a.menu(href="/menu/study/data technology") DT
                         li Rest
                             ul(class="contents")
                                 li
-                                    a(class="menu" href="/menu/rest/free") Free!
+                                    a.menu(href="/menu/rest/free") Free!
                                 li
-                                    a(class="menu" href="/menu/rest/game") Game
+                                    a.menu(href="/menu/rest/game") Game
                                 li 
-                                    a(class="menu" href="/menu/rest/life") Life
+                                    a.menu(href="/menu/rest/life") Life
                                 li 
-                                    a(class="menu" href="/menu/rest/style") Style
+                                    a.menu(href="/menu/rest/style") Style
                                 li 
-                                    a(class="menu" href="/menu/rest/trip") Trip
+                                    a.menu(href="/menu/rest/trip") Trip
                         li
-                            a(class="menu" href="/drive") My Drive
+                            a.menu(href="/drive") My Drive
                         li
-                            a(class="menu" href="/inf") MY Inf.
+                            a.menu(href="/inf") MY Inf.
                 article
                     - var description
                         if typeof(description)==="object"
-                            p(class="title")= title
-                            each i in description
-                                a(href=title+"/"+i)
-                                    p(class='description')= i
+                            p.title= title
+                            ul
+                                each i in description
+                                    li
+                                        a(href=title+"/"+i)=i
 
                         else if title=="Title."
-                            form(action="write" method="post" name='write')
-                                div(class="form_title")
-                                    h3(class="title")= title
+                            form(action="write" method="post" name='write' id="write")
+                                .form_title
+                                    h3.title= title
                                     p= description
-                                div(class="form_contents")
+                                .form_contents
                                     p
-                                        input(type='text' name='title' id="title")
+                                        input#title(type='text' name='title')
                                     p
-                                        input(type='text' name='description' id="description")
+                                        input#description(type='text' name='description')
                                     p
-                                        <select id="topic">
-                                            <option value="">  Dir.  </option>
-                                            <option value="study">Study</option>
-                                            <option value="rest">Rest</option>
-                                        </select>
-                                        <select id="field">
-                                            <option value="">  Dir.  </option>
-                                        </select>
-                                        <select id="subject">
-                                            <option value="">  Dir.  </option>
-                                        </select>
+                                        input#path(type='text' name='path' value='' readonly)
+                                        select#topic
+                                            option(value="") - Option -
+                                            option(value="study") Study
+                                            option(value="rest") Rest
+                                        select#field(class="hidden")
+                                            option(value="") - Option -
+                                        select#subject(class="hidden")
+                                            option(value="") - Option -
                                     p
-                                        input(type='submit')
-                                    
-
+                                        input(type='submit' id="submit")
                         else
-                            p(class="title")= title
-                                span(class="time")= time
-                            p(class="description")= description
+                            p.title= title
+                                span.time= time
+                            p.description= description
                 a(href="/write")
-                    div(id='write_button') write
+                    #write_button write
         footer
             h2 web info.
             address
                 p &copy; copyright all right reserved.
                 a(href='mailto:seonhun120614@gmail.com') seonhun120614@gmail.com
-        
+        #modal
+            #modal_window 
+                form(action='login' method='post' name='login')
+                p Login : 
+                    input#id(name="id" type="text")
+                p PassW : 
+                    input#pw(name="pw" type="password")
