@@ -37,62 +37,76 @@ window.onload = function(){
         document.getElementById('path').innerText = str;
     }
 
-    let topic_evt = document.getElementById('topic');
-
-    topic_evt.addEventListener('change', (event)=>{
-        let topic = document.getElementById('topic').value;
-        let title = document.getElementById('title').value;
-        let path = topic + '/';
-
-        if(topic!=""){
-
-            document.getElementById('field').removeAttribute('class');
-            ChildRemoveAll('field');
-
-            if (topic==="study"){
-                AddFormOption('field', Object.keys(study));
-            } else if(topic==="rest"){
-                AddFormOption('field', rest);
-            }
-
+    function modalShow() {
+        let modal = document.getElementById('modal');
+        if (modal.style.display == 'none') {
+            modal.style.display = 'block';
         } else {
-
-            document.getElementById('field').setAttribute('class', 'hidden');
-            document.getElementById('subject').setAttribute('class', 'hidden');
+            modal.style.display = 'none';
         }
-        document.getElementById('path').value = path;
+    }
 
-    });
-
-    let field_evt = document.getElementById('field');
-
-    field_evt.addEventListener('change',(event)=>{
-        let field = document.getElementById('field').value;
-        let title = document.getElementById('title').value;
-        let path = document.getElementById('topic').value + '/' + field + '/';
+    function chk(){
         
-        if (field in study) {
+    }
 
-            document.getElementById('subject').removeAttribute('class');
-            ChildRemoveAll('subject');
-            AddFormOption('subject', study[field]);
+    try {
+
+        document.getElementById('topic').addEventListener('change', (event)=>{
+            let topic = document.getElementById('topic').value;
+            let title = document.getElementById('title').value;
+            let path = topic + '/';
+
+            if(topic!=""){
+
+                document.getElementById('field').removeAttribute('class');
+                ChildRemoveAll('field');
+
+                if (topic==="study"){
+                    AddFormOption('field', Object.keys(study));
+                } else if(topic==="rest"){
+                    AddFormOption('field', rest);
+                }
+
+            } else {
+
+                document.getElementById('field').setAttribute('class', 'hidden');
+                document.getElementById('subject').setAttribute('class', 'hidden');
+            }
+            document.getElementById('path').value = path;
+
+        });
+
+        document.getElementById('field').addEventListener('change',(event)=>{
+            let field = document.getElementById('field').value;
+            let title = document.getElementById('title').value;
+            let path = document.getElementById('topic').value + '/' + field + '/';
             
-        } else {
-            document.getElementById('subject').setAttribute('class', 'hidden');
-        }
-        document.getElementById('path').value = path;
-    });
+            if (field in study) {
 
-    let subject_evt = document.getElementById('subject');
+                document.getElementById('subject').removeAttribute('class');
+                ChildRemoveAll('subject');
+                AddFormOption('subject', study[field]);
+                
+            } else {
+                document.getElementById('subject').setAttribute('class', 'hidden');
+            }
+            document.getElementById('path').value = path;
+        });
 
-    subject_evt.addEventListener('change',(event)=>{
-        let title = document.getElementById('title').value;
-        let path = document.getElementById('topic').value + '/' + document.getElementById('field').value+ '/' + document.getElementById('subject').value + '/';
-        document.getElementById('path').value = path;
-    });
-
-    showTime();
-    window.setInterval(showTime, 1000);
-
-
+        document.getElementById('subject').addEventListener('change',(event)=>{
+            let title = document.getElementById('title').value;
+            let path = document.getElementById('topic').value + '/' + document.getElementById('field').value+ '/' + document.getElementById('subject').value + '/';
+            document.getElementById('path').value = path;
+        });
+        document.getElementById('modal_submit').addEventListener('click', )
+        document.getElementById('submit').addEventListener('click', )
+    } catch(err) {
+        console.log(err);
+    } finally {
+        document.getElementById('login').addEventListener('click', modalShow);
+        document.getElementById('close').addEventListener('click', modalShow);
+        showTime();
+        window.setInterval(showTime, 1000);
+    }
 }
