@@ -8,13 +8,17 @@ html
         meta(name='author' content='Park seonghun')
         title &lt; Pat's Head Blog &gt;
         link(rel='stylesheet' type='text/css' href='/style.css')
+        script(src='/javascript.js')
     body
         header
             a(href="/")
                 h1 PAT HEAD BLOG
             span#time
-            a(href='/login')
-                span#login Login
+            -var name
+                if name
+                    span#user= name
+                else 
+                    span#login Login
         main
             aside ONLINE<br>CHATTING
                 #aside_button &gt;
@@ -70,7 +74,7 @@ html
                                         p
                                             input#title(type='text' name='title' value=title_ readonly)
                                         p
-                                            textarea#description(type='text' name='description' value=description_)
+                                            textarea#description(type='text' cols='100' name='description' value=description_)
                                         p
                                             input#path(type='text' name='path' value=path readonly)
                                         p
@@ -95,8 +99,8 @@ html
                         else
                             p.title= title
                                 span.time= time
-                                - var read
-                                    if read
+                                - var name
+                                    if name
                                         div#ui
                                             a(href=`./${title}/update`)
                                                 span= 'Fixing'
@@ -112,10 +116,11 @@ html
                 a(href='mailto:seonhun120614@gmail.com') seonhun120614@gmail.com
         #modal
             #modal_window 
-                form(action='login' method='post' name='login')
+                #close ❌
+                form(action='/login' method='post' name='login')
                     p Login : 
                         input#id(name="id" type="text")
-                    p PassW : 
+                    p Password : 
                         input#pw(name="pw" type="password")
-        
-        script(src='/javascript.js')
+                    p 
+                        input#modal_submit(type="submit")

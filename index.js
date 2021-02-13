@@ -3,11 +3,10 @@ const fs = require('fs');
 const url = require('url');
 const app = express();
 const bodyParser = require('body-parser');
-require('dotenv').config();
-const mongoose = require('mongoose');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
+require('dotenv').config();
 /*
 const connect = async () =>{
     if(process.env.NODE_ENV !== 'production') mongoose.set('debug', true);
@@ -55,14 +54,16 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static('public'));
+app.use(express.static('fonts'));
+
 app.use(session({  // 2
-  secret: 'keyboard cat',  // 암호화
+  secret: 'Lnmin',  // 암호화
   resave: false,
   saveUninitialized: true,
   store: new FileStore()
 }));
-app.use(express.static('public'));
-app.use(express.static('fonts'));
+
 app.locals.pretty = true;
 
 /* Update */
@@ -259,17 +260,17 @@ app.get('/menu/:topic/:field', (req, res)=>{
     fs.readdir(path, function(err, files){
         if (err){console.log(err);res.send(err);}
         let description = files;
-        let name = () =>{
+        let name = (() =>{
             if (req.session.logined) {
                 return req.session.user;
             }else{
                 return false;
             }
-        }
+        })
         res.render('main', {
             title:title, 
             description:description, 
-            name:name
+            name:name()
         });
     });
 });
@@ -322,16 +323,13 @@ app.post('/write', (req, res)=>{
 });
 
 app.post('/login', (req, res)=>{
+    console.log(req.body.id+" /// "+req.body.pw);
+    console.log(process.env.ID+" /// "+process.env.PASSWORD);
     if (req.body.id == process.env.ID && req.body.pw == process.env.PASSWORD) {
         req.session.logined = true;
         req.session.user = process.env.NAME;
-        res.render('main', {
-            title : process.env.NAME+"님",
-            description : "환영합니다.",
-            name : process.env.NAME
-        });
     }
-    res.redirect('/err');
+    res.redirect('/');
 });
 
 app.get('/logout', (req, res) =>{
@@ -343,14 +341,18 @@ app.get('/err', (req,res)=>{ res.render('main',{title:'접근 불가', descripti
 
 /*메인화면*/
 app.get('/', (req, res)=>{
-    if(req.session.logined){
-        res.render('main', {
-            title:"다양한 콘텐츠 PAT Head", 
-            description :"여기는 메인 화면입니다.",
-            name : req.session.user
-        });
+    try {
+        let entry = req.session['logined'];
+        if (entry){
+            console.log('성공');
+            req.session["user"] = 'PL';
+            res.render('main', {title:'PL 님', description : '환영합니다.'})
+        } else {
+            res.render('main', {title:"다양한 콘텐츠 PAT Head", description :"여기는 메인 화면입니다.", name:''});
+        }
+    } catch {
+        res.render('main', {title:"다양한 콘텐츠 PAT Head", description :"여기는 메인 화면입니다.", name:''});
     }
-    res.render('main', {title:"다양한 콘텐츠 PAT Head", description :"여기는 메인 화면입니다.", name:''});
 });
 
 /* 서버를 3000포트로 열고 callback함수 실행 */

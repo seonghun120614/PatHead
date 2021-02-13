@@ -86,6 +86,9 @@ header{
     color : white;
     font-size : 1em;
 }
+#login:hover{
+    cursor: pointer;
+}
 
 
 
@@ -257,29 +260,41 @@ footer > h2{
 
 
 #modal {
-    position : absolute;
     display : none;
+    position : absolute;
+    opacity : 0;
     background : rgba(0,0,0,0.5);
     width : 100vw;
     height : 100vh;
     top:0;
     left:0;
+    transition : all 0.35s;
+    z-index:1;
 }
+#modal:hover{opacity : 100;}
 #modal_window {
     position :absolute;
     background : white;
-    width : 480px;
+    width : 0px;
     height :600px;
     transform : translate(-50%, -50%);
     top  : 50%;
     left : 50%;
     border-radius : 5px;
     text-align :center;
-    
+    transition: all 0.35s;
+}
+#modal:hover > #modal_window{width : 480px;}
+#close{
+    position : absolute;
+    top : 0;
+    right : 0;
+    width : auto;
+    height : auto;
+}
+#close:hover {
+    cursor : pointer;
 }
 #modal_window > p {
     color: black;
 }
-
-
-
