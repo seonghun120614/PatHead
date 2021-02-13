@@ -156,8 +156,6 @@ app.get('/menu/study/:field/:subject/:id', (req, res)=>{
     let path = `menu/study/${field}/${subject}/${id}`;
     fs.readFile(path, "utf8", (err, data)=>{
         if (err){console.log(err);res.send(err);}
-
-
         fs.stat(path, (err, stats)=>{
             if (err){console.log(err);res.send(err);}
             let mtime = stats.mtime;

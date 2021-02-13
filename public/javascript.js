@@ -1,11 +1,11 @@
 'use strict'
 
 const study = {"ai":["deep learning", 'reinforcement learning', 'supervised learning', 'unsupervised learning'],
-"computer":['c','css','html','java','javascript','python'],
+"computer":['c&c++','css','java','javascript','python'],
 "data technology":['data mining','data processing'],
 "math":['calculus','linear algebra','number theorem','set theorem'],
 "statistics":["descriptive statistics", "inferential statistics"]};
-const rest = ["free","game","life","trip"];
+const rest = ["free","game", "style","life","trip"];
 
 
 window.onload = function(){
