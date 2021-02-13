@@ -8,13 +8,13 @@ html
         meta(name='author' content='Park seonghun')
         title &lt; Pat's Head Blog &gt;
         link(rel='stylesheet' type='text/css' href='/style.css')
-        script(src='/javascript.js')
     body
         header
             a(href="/")
                 h1 PAT HEAD BLOG
             span#time
-
+            a(href='/login')
+                span#login Login
         main
             aside ONLINE<br>CHATTING
                 #aside_button &gt;
@@ -61,30 +61,47 @@ html
                                         a(href=title+"/"+i)=i
 
                         else if title=="Title."
-                            form(action="write" method="post" name='write' id="write")
+                            form(action="/write" method="post" name='write' id="write")
                                 .form_title
                                     h3.title= title
                                     p= description
                                 .form_contents
-                                    p
-                                        input#title(type='text' name='title')
-                                    p
-                                        input#description(type='text' name='description')
-                                    p
-                                        input#path(type='text' name='path' value='' readonly)
-                                        select#topic
-                                            option(value="") - Option -
-                                            option(value="study") Study
-                                            option(value="rest") Rest
-                                        select#field(class="hidden")
-                                            option(value="") - Option -
-                                        select#subject(class="hidden")
-                                            option(value="") - Option -
-                                    p
-                                        input(type='submit' id="submit")
+                                    if status=="update"
+                                        p
+                                            input#title(type='text' name='title' value=title_ readonly)
+                                        p
+                                            textarea#description(type='text' name='description' value=description_)
+                                        p
+                                            input#path(type='text' name='path' value=path readonly)
+                                        p
+                                            input(type='submit' id="submit")
+                                    else
+                                        p
+                                            input#title(type='text' name='title')
+                                        p
+                                            textarea#description(type='text' name='description')
+                                        p
+                                            input#path(type='text' name='path' value='' readonly)
+                                            select#topic
+                                                option(value="") - Option -
+                                                option(value="study") Study
+                                                option(value="rest") Rest
+                                            select#field(class="hidden")
+                                                option(value="") - Option -
+                                            select#subject(class="hidden")
+                                                option(value="") - Option -
+                                        p
+                                            input(type='submit' id="submit")
                         else
                             p.title= title
                                 span.time= time
+                                - var read
+                                    if read
+                                        div#ui
+                                            a(href=`./${title}/update`)
+                                                span= 'Fixing'
+                                            a(href=`./${title}/remove`)
+                                                span= 'Delete'
                             p.description= description
                 a(href="/write")
                     #write_button write
@@ -96,7 +113,9 @@ html
         #modal
             #modal_window 
                 form(action='login' method='post' name='login')
-                p Login : 
-                    input#id(name="id" type="text")
-                p PassW : 
-                    input#pw(name="pw" type="password")
+                    p Login : 
+                        input#id(name="id" type="text")
+                    p PassW : 
+                        input#pw(name="pw" type="password")
+        
+        script(src='/javascript.js')

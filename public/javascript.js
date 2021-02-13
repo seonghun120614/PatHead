@@ -37,58 +37,62 @@ window.onload = function(){
         document.getElementById('path').innerText = str;
     }
 
-    try{
-        document.getElementById('topic').onchange = ()=>{
-            let topic = document.getElementById('topic').value;
-            let title = document.getElementById('title').value;
-            let path = topic + '/';
+    let topic_evt = document.getElementById('topic');
 
-            if(topic!=""){
+    topic_evt.addEventListener('change', (event)=>{
+        let topic = document.getElementById('topic').value;
+        let title = document.getElementById('title').value;
+        let path = topic + '/';
 
-                document.getElementById('field').removeAttribute('class');
-                ChildRemoveAll('field');
+        if(topic!=""){
 
-                if (topic==="study"){
-                    AddFormOption('field', Object.keys(study));
-                } else if(topic==="rest"){
-                    AddFormOption('field', rest);
-                }
+            document.getElementById('field').removeAttribute('class');
+            ChildRemoveAll('field');
 
-            } else {
-
-                document.getElementById('field').setAttribute('class', 'hidden');
-                document.getElementById('subject').setAttribute('class', 'hidden');
+            if (topic==="study"){
+                AddFormOption('field', Object.keys(study));
+            } else if(topic==="rest"){
+                AddFormOption('field', rest);
             }
 
-            document.getElementById('path').value = path;
-        };
+        } else {
 
-        document.getElementById('field').onchange = ()=>{
-            let field = document.getElementById('field').value;
-            let title = document.getElementById('title').value;
-            let path = document.getElementById('topic').value + '/' + field + '/';
-            
-            if (field in study) {
-
-                document.getElementById('subject').removeAttribute('class');
-                ChildRemoveAll('subject');
-                AddFormOption('subject', study[field]);
-                
-            } else {
-                document.getElementById('subject').setAttribute('class', 'hidden');
-            }
-            document.getElementById('path').value = path;
-        };
-
-        document.getElementById('subject').onchange = ()=>{
-            let title = document.getElementById('title').value;
-            let path = document.getElementById('topic').value + '/' + document.getElementById('field').value+ '/' +document.getElementById('subject').value + '/';
-            document.getElementById('path').value = path;
+            document.getElementById('field').setAttribute('class', 'hidden');
+            document.getElementById('subject').setAttribute('class', 'hidden');
         }
-    } catch {
-        console.log("Error");
-    } finally {
-        showTime();
-        window.setInterval(showTime, 1000);
-    }
+        document.getElementById('path').value = path;
+
+    });
+
+    let field_evt = document.getElementById('field');
+
+    field_evt.addEventListener('change',(event)=>{
+        let field = document.getElementById('field').value;
+        let title = document.getElementById('title').value;
+        let path = document.getElementById('topic').value + '/' + field + '/';
+        
+        if (field in study) {
+
+            document.getElementById('subject').removeAttribute('class');
+            ChildRemoveAll('subject');
+            AddFormOption('subject', study[field]);
+            
+        } else {
+            document.getElementById('subject').setAttribute('class', 'hidden');
+        }
+        document.getElementById('path').value = path;
+    });
+
+    let subject_evt = document.getElementById('subject');
+
+    subject_evt.addEventListener('change',(event)=>{
+        let title = document.getElementById('title').value;
+        let path = document.getElementById('topic').value + '/' + document.getElementById('field').value+ '/' + document.getElementById('subject').value + '/';
+        document.getElementById('path').value = path;
+    });
+
+    showTime();
+    window.setInterval(showTime, 1000);
+
+
 }

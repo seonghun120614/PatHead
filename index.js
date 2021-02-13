@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const url = require('url');
 const app = express();
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -45,6 +46,71 @@ app.use(express.static('fonts'));
 app.locals.pretty = true;
 
 
+/* Update */
+app.get('/menu/study/:field/:subject/:id/update', (req, res)=>{
+    let field = req.params.field;
+    let subject = req.params.subject;
+    let id = req.params.id;
+    let path = `menu/study/${field}/${subject}/${id}`;
+    
+    fs.readFile(path, 'utf8', (err, data)=>{
+        if(err){throw err;}
+        res.render('main', 
+        {
+            title:'Title.', 
+            description : "Cont.", 
+            title_:id, 
+            description_:data,
+            path:`study/${field}/${subject}`,
+            status:'update'
+        });
+    });
+});
+
+app.get('/menu/rest/:field/:subject/update', (req, res)=>{
+    let field = req.params.field;
+    let subject = req.params.subject;
+
+    let path = `menu/rest${field}/${subject}`;
+
+    fs.readFile(path, (err, data)=>{
+        if(err){throw err}
+        res.render('main', 
+        {
+            title:'Title.', 
+            description : "Cont.", 
+            title_:id, 
+            description_:data,
+            path:`rest/${field}`,
+            status:'update'
+        });
+    });
+});
+
+/* Remove */
+
+app.get('/menu/study/:field/:subject/:id/remove', (req, res)=>{
+    let field = req.params.field;
+    let subject = req.params.subject;
+    let id = req.params.id;
+    let path = url.resolve('menu/study', `${field}/${subject}/${id}`);
+    fs.unlink(path, (err) => {
+        if (err) throw err;
+        console.log(path+' was deleted');
+        res.redirect(url.resolve('/menu/study/',`${field}/${subject}`));
+    });
+});
+
+app.get('/menu/rest/:field/:subject/remove', (req, res)=>{
+    let field = req.params.field;
+    let subject = req.params.subject;
+    let path = url.resolve('menu/rest/', `${field}/${subject}`);
+    fs.unlink(path, (err) => {
+        if (err) throw err;
+        console.log(path+' was deleted');
+        res.redirect(url.resolve('/menu/rest/', field));
+    });
+});
 
 /* Study의 게시글 보여주기 */
 app.get('/menu/study/:field/:subject/:id', (req, res)=>{
@@ -67,7 +133,7 @@ app.get('/menu/study/:field/:subject/:id', (req, res)=>{
 
             let time = `${year}-${month}-${date} (${day})`;
 
-            res.render('main', {title:id, description:data, time:time});
+            res.render('main', {title:id, description:data, time:time, read: true});
         });
     });
 });
@@ -105,7 +171,7 @@ app.get('/menu/rest/:field/:id', (req,res)=>{
 
             let time = `${year}-${month}-${date} (${day})`;
 
-            res.render('main', {title:id, description:data, time:time});
+            res.render('main', {title:id, description:data, time:time, read:true});
         });
     });
 });
@@ -124,42 +190,42 @@ app.get('/menu/rest/:field', (req, res)=>{
 app.get('/menu/:topic/:field', (req, res)=>{
     let topic = req.params.topic;
     let title = req.params.field;
-    let path = `menu/${topic}/${title}/`
+    let path = decodeURI(url.resolve(`menu/`, topic+"/"+title));
     fs.readdir(path, function(err, files){
         if (err){console.log(err);res.send(err);}
         let description = files;
-        res.render('main', {title:title, description:description});
+        res.render('main', {title:title, description:description, read:false});
     });
 });
 
 /* 드라이브 구성 */
 app.get('/drive', (req, res)=>{
-
     res.render('main', {title:'drive', description: 'my chest'});
-
 });
 
 /* 나의 포트폴리오 보여주기 */
 app.get('/inf', (req, res)=>{
-
     res.render('main', {title:'MY Information', description:'blur blurblur'});
-
 });
 
 /*글쓰기*/
 app.get('/write', (req, res)=>{
-    res.render('main', {title:'Title.', description:"Cont."});
+    res.render('main', 
+    {
+        title:'Title.', 
+        description:"Cont.",
+        status:'create'
+    });
 });
 
 /*글쓰기 후 전송*/
 app.post('/write', (req, res)=>{
     let title = req.body.title;
     let description = req.body.description;
-    console.log(title, description);
-    let url = `menu/${req.body.topic}/${req.body.field}/${req.body.subject}/${title}`;
+    let url = `menu/${req.body.path}/${title}`;
     fs.writeFile(url, description, function(err){
         if (err){console.log(err);res.send(err);}
-        res.render('main',{title:title, description:description});
+        res.render('main',{title:title, description:description,read:true});
     });
 });
 
@@ -172,8 +238,4 @@ app.get('/login', (req, res) =>{
 app.get('/', (req, res)=>{res.render('main', {title:"다양한 블로그 PAT Head", description :"여기는 메인 화면입니다."});});
 
 /* 서버를 3000포트로 열고 callback함수 실행 */
-app.listen(3000, () => {
-
-    console.log('Server open port : 3000');
-    
-});
+app.listen(3000, () => {console.log('Server open port : 3000');});

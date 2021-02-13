@@ -64,6 +64,7 @@ header{
     width : 100vw;
     right: 50%;
     transform : translate(50%,0);
+    z-index : 1;
 }
 #time {
     display: block;
@@ -74,6 +75,16 @@ header{
     right : 0;
     color : grey;
     font-size : 0.5em;
+}
+#login{
+    display: block;
+    position: absolute;
+    width : auto;
+    height : auto;
+    top : 10px;
+    right : 0;
+    color : white;
+    font-size : 1em;
 }
 
 
@@ -117,7 +128,9 @@ form#write{
     font-size : 1.5em;
 }
 #description{
-    height : 480px;
+    font-size: 1.2em;
+    height : 45vh;
+    width : 100%;
 }
 input{
     border: 1px solid grey;
@@ -143,10 +156,23 @@ input{
     color: black;
 }
 .time{
-    font-size:0.4em;
+    font-size:0.5em;
     color : grey;
 }
-
+#ui{
+    position :absolute;
+    display : flex;
+    right : 10px;
+    top : 10px;
+}
+#ui>a>span{
+    border : 2px solid grey;
+    border-radius : 2px;
+    background : #1e212d;
+    font-size:1em;
+    text-decoration: dashed;
+    color : white;
+}
 
 nav {
     text-decoration: block;
@@ -254,3 +280,6 @@ footer > h2{
 #modal_window > p {
     color: black;
 }
+
+
+
