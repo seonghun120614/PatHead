@@ -3,10 +3,25 @@ const fs = require('fs');
 const url = require('url');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 require('dotenv').config();
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);     
+mongoose.set('useUnifiedTopology', true); 
+mongoose.connect(process.env.MONGO_DB); 
+var db = mongoose.connection; 
+db.once('open', function(){
+  console.log('DB connected');
+});
+
+db.on('error', function(err){
+  console.log('DB ERROR : ', err);
+});
 /*
 const connect = async () =>{
     if(process.env.NODE_ENV !== 'production') mongoose.set('debug', true);
