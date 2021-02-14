@@ -3,38 +3,24 @@ const fs = require('fs');
 const url = require('url');
 const app = express();
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);     
-mongoose.set('useUnifiedTopology', true); 
-mongoose.connect(process.env.MONGO_DB); 
-var db = mongoose.connection; 
-db.once('open', function(){
-  console.log('DB connected');
-});
-
-db.on('error', function(err){
-  console.log('DB ERROR : ', err);
-});
-/*
 const connect = async () =>{
     if(process.env.NODE_ENV !== 'production') mongoose.set('debug', true);
 
     
     try {
-        await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@phdb.wisly.mongodb.net/phdb?retryWrites=true&w=majority`, {
+        await mongoose.connect(process.env.MONGO_DB, {
             dbName: 'nodejs',
             useNewUrlParser: true,
             useFindAndModify: false,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useUnifiedTopology: true
         });
-        console.log('The server is conneted');
+        console.log('MongoDB connected');
     } catch(error){
         console.error(error);
     }
@@ -50,7 +36,6 @@ mongoose.connection.on('disconnected', ()=>{
     console.error('몽고디비 연결 끊김, 연결 재시도');
     connect();
 });
-*/
 
 /* 
 rendering 주요 요소
@@ -82,6 +67,7 @@ app.use(session({  // 2
 app.locals.pretty = true;
 
 /* Update */
+
 app.get('/menu/study/:field/:subject/:id/update', (req, res)=>{
     let field = req.params.field;
     let subject = req.params.subject;
@@ -101,9 +87,11 @@ app.get('/menu/study/:field/:subject/:id/update', (req, res)=>{
         res.render('main',{
             title: 'Title.',
             description:'Cont.',
+            status:'update',
             title_: id,
             description_: data,
-            name : name,
+            path : `study/${field}/${subject}`,
+            name : name(),
         });
     });
 });
@@ -112,7 +100,7 @@ app.get('/menu/rest/:field/:subject/update', (req, res)=>{
     let field = req.params.field;
     let subject = req.params.subject;
 
-    let path = `menu/rest${field}/${subject}`;
+    let path = `menu/rest/${field}/${subject}`;
 
     fs.readFile(path, (err, data)=>{
         if(err){throw err}
@@ -130,9 +118,9 @@ app.get('/menu/rest/:field/:subject/update', (req, res)=>{
             description: 'Cont.',
             title_ : id,
             description_ : data,
-            path : `study/${field}/${subject}`,
+            path : `rest/${field}/${subject}`,
             status : 'update',
-            name : name
+            name : name()
         });
     });
 });
@@ -210,7 +198,7 @@ app.get('/menu/study/:field/:subject', (req, res)=>{
                 return false;
             }
         }
-        res.render('main', {title : field, description : files, name : name()});
+        res.render('main', {title : subject, description : files, name : name()});
     });
 });
 
@@ -245,7 +233,7 @@ app.get('/menu/rest/:field/:id', (req,res)=>{
             res.render('main', {
                 title: id,
                 description : data,
-                name : name,
+                name : name(),
                 time : time
             });
         });
@@ -336,8 +324,6 @@ app.post('/write', (req, res)=>{
 });
 
 app.post('/login', (req, res)=>{
-    console.log(req.body.id+" /// "+req.body.pw);
-    console.log(process.env.ID+" /// "+process.env.PASSWORD);
     if (req.body.id == process.env.ID && req.body.pw == process.env.PASSWORD) {
         req.session.logined = true;
         req.session.user = process.env.NAME;
