@@ -82,7 +82,7 @@ app.get('/menu/study/:field/:subject/:id/update', (req, res)=>{
         }
     }
     
-    fs.readFile(path, 'utf8', (err, data)=>{
+    fs.readFile(path, 'utf-8', (err, data)=>{
         if(err){throw err;}
         res.render('main',{
             title: 'Title.',
@@ -102,7 +102,7 @@ app.get('/menu/rest/:field/:subject/update', (req, res)=>{
 
     let path = `menu/rest/${field}/${subject}`;
 
-    fs.readFile(path, (err, data)=>{
+    fs.readFile(path, 'utf-8', (err, data)=>{
         if(err){throw err}
 
         let name = () =>{
@@ -157,12 +157,11 @@ app.get('/menu/study/:field/:subject/:id', (req, res)=>{
     let subject = req.params.subject;
     let id = req.params.id;
     let path = `menu/study/${field}/${subject}/${id}`;
-    fs.readFile(path, "utf8", (err, data)=>{
+    fs.readFile(path, "utf-8", (err, data)=>{
         if (err){console.log(err);res.send(err);}
         fs.stat(path, (err, stats)=>{
             if (err){console.log(err);res.send(err);}
             let mtime = stats.mtime;
-        
             let year = mtime.getFullYear();
             let month = mtime.getMonth() + 1;
             let date = mtime.getDate();
@@ -178,7 +177,7 @@ app.get('/menu/study/:field/:subject/:id', (req, res)=>{
             }
             let time = `${year}-${month}-${date} (${day})`;
 
-            res.render('main',{title : id, description : data, name : name(), time:time, });
+            res.render('main',{title : id, description : data, name : name(), time:time});
         });
     });
 });
@@ -208,7 +207,7 @@ app.get('/menu/rest/:field/:id', (req,res)=>{
     let id = req.params.id;
     let path = `menu/rest/${field}/${id}`;
 
-    fs.readFile(path, "utf8", (err, data)=>{
+    fs.readFile(path, "utf-8", (err, data)=>{
         if(err){console.log(err); res.send(err);}
 
         fs.stat(path, (err, stats)=>{
@@ -230,9 +229,10 @@ app.get('/menu/rest/:field/:id', (req,res)=>{
                 }
             }
 
+            
             res.render('main', {
                 title: id,
-                description : data,
+                description : String.raw`${data}`,
                 name : name(),
                 time : time
             });
@@ -343,9 +343,15 @@ app.get('/', (req, res)=>{
     try {
         let entry = req.session['logined'];
         if (entry){
-            console.log('성공');
             req.session["user"] = 'PL';
-            res.render('main', {title:'PL 님', description : '환영합니다.'})
+            let name = () =>{
+            if (req.session.logined) {
+                    return req.session.user;
+                }else{
+                    return false;
+                }
+            }
+            res.render('main', {title:'PL 님', description : '환영합니다.', name:name()})
         } else {
             res.render('main', {title:"다양한 콘텐츠 PAT Head", description :"여기는 메인 화면입니다.", name:''});
         }

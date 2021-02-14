@@ -125,7 +125,9 @@ form#write{
     font-weight :900;
 }
 .description {
-    font-family:'ostrichsans';
+    width : 100%;
+    height :70%;
+    white-space: pre-wrap;
 }
 #path {
     font-size : 1.5em;
@@ -297,4 +299,21 @@ footer > h2{
 }
 #modal_window > p {
     color: black;
+}
+
+
+#web {
+    color : white;
+    font-size :1em;
+    text-align : center;
+    font-weight : 700;
+    display : block;
+    position: absolute;
+    right :1vw;
+    top :50vh;
+    transform : translate(0,-50% );
+    width : 100px;
+    height : 520px;
+    background : linear-gradient(180deg, #787878 0%, #787878 5%, white 5%, white 100%);
+    border-radius : 20px;
 }

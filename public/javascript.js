@@ -1,7 +1,7 @@
 'use strict'
 
 const study = {"ai":["deep learning", 'reinforcement learning', 'supervised learning', 'unsupervised learning'],
-"computer":['c&c++','css','java','javascript','python'],
+"computer":['c&c++','css','java','javascript','python', '정보처리기능사', '백준', '프로그래머스'],
 "data technology":['data mining','data processing'],
 "math":['calculus','linear algebra','number theorem','set theorem'],
 "statistics":["descriptive statistics", "inferential statistics"]};
@@ -46,12 +46,8 @@ window.onload = function(){
         }
     }
 
-    function chk(){
-        
-    }
 
     try {
-
         document.getElementById('topic').addEventListener('change', (event)=>{
             let topic = document.getElementById('topic').value;
             let title = document.getElementById('title').value;
@@ -74,7 +70,7 @@ window.onload = function(){
                 document.getElementById('subject').setAttribute('class', 'hidden');
             }
             document.getElementById('path').value = path;
-
+            window.setInterval(changeLine,1000);
         });
 
         document.getElementById('field').addEventListener('change',(event)=>{

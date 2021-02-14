@@ -24,6 +24,14 @@ html
                 #aside_button &gt;
                 #aside_content
                 #aside_chatting
+            - var i
+            if title=="PL 님"
+                #web MENU
+                    .link
+                        a(href="https://www.acmicpc.net/" target='_blank') baekjoon
+                    .link
+                        a(href="https://programmers.co.kr/" target='_blank') programmers
+
             #window
                 nav
                     ul.list
@@ -100,13 +108,15 @@ html
                             p.title= title
                                 span.time= time
                                 - var name
-                                    if name
+                                    if name && title!="PL 님"
                                         div#ui
                                             a(href=`./${title}/update`)
                                                 span= 'Fixing'
                                             a(href=`./${title}/remove`)
                                                 span= 'Delete'
-                            p.description= description
+                            pre.description= description
+
+                                    
                 a(href="/write")
                     #write_button write
         footer
