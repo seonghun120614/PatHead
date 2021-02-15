@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const mongoose = require('mongoose');
+const Written = require('./models/written')
 require('dotenv').config();
 
 const connect = async () =>{
