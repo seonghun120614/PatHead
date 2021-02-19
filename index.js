@@ -6,13 +6,12 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const mongoose = require('mongoose');
-const Book = require('./models/book.js')
+//const Book = require('./models/book.js')
 require('dotenv').config();
-
+/*
 const connect = async () =>{
     if(process.env.NODE_ENV !== 'production') mongoose.set('debug', true);
 
-    
     try {
         await mongoose.connect(process.env.MONGO_DB, {
             dbName: 'nodejs',
@@ -36,7 +35,7 @@ mongoose.connection.on('disconnected', ()=>{
     console.error('몽고디비 연결 끊김, 연결 재시도');
     connect();
 });
-
+*/
 /*
 rendering 주요 요소
 
@@ -260,7 +259,6 @@ app.get('/menu/:topic/:field', (req, res)=>{
     let path = decodeURI(url.resolve(`menu/`, topic+"/"+title));
     fs.readdir(path, function(err, files){
         if (err){console.log(err);res.send(err);}
-        let description = files;
         let name = (() =>{
             if (req.session.logined) {
                 return req.session.user;
@@ -270,7 +268,7 @@ app.get('/menu/:topic/:field', (req, res)=>{
         })
         res.render('main', {
             title:title, 
-            description:description, 
+            description:files, 
             name:name()
         });
     });

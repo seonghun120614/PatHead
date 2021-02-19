@@ -1,0 +1,140 @@
+클래스 선언
+public class {클래스 명}{
+    프로그램 요소
+}
+
+메소드 선언
+public class exam {
+    public static int area(int x, int y) {
+        return x*y;
+    }
+    public static void main(String[] args) {
+        int rect = area(10,5);
+    }
+}
+
+변수 선언
+
+INT형 데이터타입
+byte : 1 byte (-128 ~ 127)
+short : 2 byte (-32768 ~ 32767)
+int : 4 byte (-(2^31) ~ (2^31)-1)
+long : 8 byte (-(2^63) ~ (2^63)-1)
+
+FLOAT형 데이터타입
+float : 4 byte (-3.4E38 ~ 3.4E38)
+double : 8 byte (-1.7E308 ~ 1.7E308)
+
+논리형 데이터타입
+boolean : 1 byte (true, false)
+
+java 연산자
+!=, ==, >, <, <=, >=, &&, ||, !, 
+
+-프로그래밍 코드-
+==========================
+public class type {
+    public static void main(String[] args) {
+        int i = (int)12.345; //타입 변환
+        System.out.println(i);
+    }
+}
+==========================
+public class main {
+    public static void main(String[] args) {
+        int i=100;
+        double d = 1.23D;
+        float f = 1.23f;
+        char c1, c2;
+
+        String str = "hello";
+        System.out.print("나는" + str + "이다.");
+    }
+}
+==========================
+public class main {
+    public static void main(String[] args) {
+        int i=100;
+        double d = 1.23D;
+        float f = 1.23f;
+        char c1, c2;
+
+        String str = "hello";
+        System.out.print("나는" + str + "이다.");
+    }
+}
+==========================
+/*
+오늘의 날짜를 입력받아 출력하는 프로그램
+*/
+import java.util.Scanner;
+public class main{
+    public static void main(String[] args) {
+        System.out.println('년도, 월, 일, 요일을 공백으로 분리하여 순서대로 입력하세요!');
+        Scanner output = new Scanner(System.in);
+        int year = output.nextInt(); // 년도
+        int month = output.nextInt(); // 월
+        int date = output.nextInt(); // 일
+        String day = output.next(); // 요일
+        int year = output.nextInt();
+        System.out.println('오늘은 ' + year + '년');
+    }
+}
+==========================
+public class Problem
+{
+    public static void main (String[] args) {
+        int i,j =0;
+        for (i=1; i<8; i++){
+            j= j+i;
+        }
+        System.out.printf("%d, %d", i, j);
+    }
+}
+==========================
+import java.util.Scanner;
+public class Problem
+{
+    public static void main (String[] args){
+        int i = 
+    }
+}
+=========================
+public class Problem {
+    public static void main(String[] args){
+        int num1 = 16;
+        int num2 = 44;
+        int a = num1++; //나중 연산
+        int b = --num2; //먼저 연산
+        System.out.printf("%d %d", a, b);
+
+    }
+}
+==========================
+import java.util.Scanner;
+public class Problem{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in); //Scanner객체 생성
+        int data = sc.nextInt(); //입력받은 값을 int형으로 변환후 저장
+        //말고도 next변수형을 하면됨.
+
+        System.out.println("사용자가 입력한 데이터" + data);
+    }
+}
+=========================
+import java.util.Random;
+
+public class Problem {
+    public static void main(String[] args){
+        // r이라는 난수를 생성하는 객체로 저장
+        // 해당 r의 범위는 0<=  <n까지
+        
+        Random r = new Random();
+        // r.nextInt()는 r을 Int로 바꿔서 출력함
+        System.out.println("임의의 수 " + r.nextInt(1));
+        System.out.println("임의의 수 " + r.nextInt(5));
+        System.out.println("임의의 수 " + r.nextInt(10));
+        //내가 원하는 범위를 잡을때
+        System.out.println("임의의 수 " + r.nextInt((5-1+1) +1));
+    } 
+}

@@ -131,6 +131,7 @@ form#write{
     white-space: pre-wrap;
     border : none;
     scroll-behavior: smooth;
+    padding :5px;
 }
 #path {
     font-size : 1.5em;

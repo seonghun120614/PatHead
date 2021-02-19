@@ -1,0 +1,31 @@
+C언어 - 고급언어와 저급언어의 특징을 모두 가진 우수한 언어
+
+자료형들
+char
+unsigned char
+
+short
+unsigned short
+int
+unsigned int
+long
+unsigned long
+
+float
+double
+
+void
+
+진법표현
+
+8진수 : 014, '\014'
+10진수 : 12, 12
+16진수 : 0xC, '\xC'
+
+실수형 표현
+
+float 변수명;
+double 변수명;
+
+열거형
+enum DEF _num{HANA, DUL, SET, NET} (대응 값은 0,1,2,... zero-indexing)
