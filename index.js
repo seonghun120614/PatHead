@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const mongoose = require('mongoose');
-const Written = require('./models/written')
+const Book = require('./models/book.js')
 require('dotenv').config();
 
 const connect = async () =>{
@@ -26,7 +26,6 @@ const connect = async () =>{
         console.error(error);
     }
 };
-
 connect();
 
 mongoose.connection.on('error', (error)=>{
@@ -38,7 +37,7 @@ mongoose.connection.on('disconnected', ()=>{
     connect();
 });
 
-/* 
+/*
 rendering 주요 요소
 
 title : 글 제목
@@ -105,7 +104,7 @@ app.get('/menu/rest/:field/:subject/update', (req, res)=>{
 
     fs.readFile(path, 'utf-8', (err, data)=>{
         if(err){throw err}
-
+        
         let name = () =>{
             if (req.session.logined) {
                 return req.session.user;
