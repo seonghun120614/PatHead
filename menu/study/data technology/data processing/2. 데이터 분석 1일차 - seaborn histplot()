@@ -1,0 +1,41 @@
+오늘은 seaborn.histplot()에대해 써보려한다.
+
+해당 메소드의 arguments 먼저 살펴보자.
+seaborn.histplot(data=None, *, x=None, y=None, hue=None, weights=None, stat='count', bins='auto', binwidth=None, binrange=None, discrete=None, cumulative=False, common_bins=True, common_norm=True, multiple='layer', element='bars', fill=True, shrink=1, kde=False, kde_kws=None, line_kws=None, thresh=0, pthresh=None, pmax=None, cbar=False, cbar_ax=None, cbar_kws=None, palette=None, hue_order=None, hue_norm=None, color=None, log_scale=None, legend=True, ax=None, **kwargs)으로 인자가 매우 많은데,,, 해당 인자들을 다 살펴보는건 시간도 아까우며, 해당 라이브러리를 뜯어보면서 까지 자세히 다룰 수 있는건 후에 해도 문제가 없기에 중요 인자들만 정리하자.
+
+data : pandas.DataFrame, numpy.ndarray, mapping, or sequence
+의 형태로 들어가며, 그래프로 그려질 데이터를 주는 것과 같다. 만약 pandas와 numpy를 쓴다면 x와 y에 keys를 써서 축의 attribute를 설정할 수 있다. 하지만 없다면 x와 y에 직접 데이터를 넣어야 한다.
+
+x : vectors or keys in data
+여기서 vectors는 list형태혹은 tuple로 들어갈 수 있으며, data가 numpy.ndarray, pandas.DataFrame인 경우 x에 해당 columns의 field 이름을 가져다 쓰면 된다.
+
+y : vectors or keys in data
+ x와 동일하다.
+
+hue : vector or key in data
+Semantic variable that is mapped to determine the color of plot elements.
+원문에는 이렇게 나와있는데, 해석하자면 그래프의 요소들의 색을 1대1로 대응하여 나타내주는 의미론적인 변수이다.
+즉, x와 y 같이 필드 이름을 넣으면 해당 데이터의 색깔을 수치가 높을 수록 진하게 해서 보여주는(의미화하는) 그런 인자이다.
+
+여기서 잠시 실습을 해보자면,
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
+arr = np.random.rand(100) #100개의 요소를 가지는 ndarray를 생성
+sns.histplot(arr) #데이터를 알아서 histogram으로 그려라
+를 해보면 histogram으로 자동으로 그려주는데 x는 해당 data이며, y는 자동으로 count로 지정된다.
+그리고 막대그래프가 차지하는 x의 영역은 최소, 최대값으로 되며, 해당 bar들의 개수는
+
+bins : str, number, vector, or a pair of such values
+Generic bin parameter that can be the name of a reference rule, the number of bins, or the breaks of the bins. Passed to numpy.histogram_bin_edges().
+인자로 할 수 있는데, 이때 string을 넣을 수 있는건 바로 'auto'로 인자에대한 아무런 명시가 없을시 auto가 된다. 이때는 그냥 자기가 판단하에 그래프를 그린다. 다음으로 number, vector을 자주 쓴다. number로는 bar의 개수를 지정할 수 있으며, vector로는 구간을 지정하여 해당 히스토그램의 그래프 형태를 바꿀 수 있다.
+
+rnd = np.random.standard_normal(100000) # 100000개의 정규분포를 따르는 데이터를 가진 ndarray를 생성
+sns.histplot(rnd, bins=100) 
+를 해보자. 얼추 정규분포와 흡사하다.
+
+이제 간단한 그래프 디자인에 관련된 인자들을 살펴보자면
+fill : bool # False로 할시 막대기의 색깔이 비게 된다.
+kde : kernel density estimation인데, 이는 히스토그램의 그래프 형태를 따라 그린 선이다. 해당 kde를 구글에 검색할 시 자세한게 나오는데, 해당 통계 게시판에서 보자. True로 할 시 kde를 한 그래프를 그려준다. 일반적으로 False이다.

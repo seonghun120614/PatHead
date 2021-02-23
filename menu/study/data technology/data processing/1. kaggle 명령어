@@ -1,0 +1,14 @@
+우리는 데이터만 가져오는 용도로 쓰기에 해당 kaggle의 data 게시글들에서 설정에 copy api command를 활용하길 바란다.
+
+- 쓰이는 라이브러리
+fbprophet : 시계열 데이터 예측을 위한 facebook 사에서 제공하는 패키지
+kaggle : kaggle 웹사이트와의 DB연동을 위한 API적용 패키지
+lightgbm : Light Gradient Boosting Machine의 약자이며 Microsoft 사에서 무료 오픈소스로 제공함, Machine Learning을 위해 사용
+numpy : Tensor, Metrix, Array 등의 연산을 매우 빠르게 해주는 수학 연산 라이브러리이다.
+openCV : 컴퓨터 비전을 위한 라이브러리이며, 이미지 처리에 사용한다.
+pandas : 데이터중 Tabular를 시각화하고, 다룬느데 있어 매우 유용한 라이브러리이다.
+scikit-learn : 기계학습 라이브러리이다.
+seaborn : 데이터 시각화 라이브러리이다.
+tensorflow : 머신러닝 패키지이다. 안에 keras도 있음
+torch : 머신러닝 패키지이다.
+XGBoost : 그라디언트 부스팅 프레임워크이다.(lightgbm과 사용)

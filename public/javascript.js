@@ -2,7 +2,7 @@
 
 const study = {"ai":["deep learning", 'reinforcement learning', 'supervised learning', 'unsupervised learning'],
 "computer":['c&c++','css','java','javascript','python', '정보처리기능사', '백준', '프로그래머스'],
-"data technology":['data mining','data processing'],
+"data technology":['data analysis','data processing'],
 "math":['calculus','linear algebra','number theorem','set theorem'],
 "statistics":["descriptive statistics", "inferential statistics"]};
 const rest = ["free","game", "style","life","trip"];
