@@ -1,0 +1,47 @@
+seaborn.pairplot()을 살펴보자.
+
+우선, pairplot의 형태부터 알아보는게 좋을텐데, 한번 검색으로 봤으면 한다.
+
+seaborn.pairplot(data, *, hue=None, hue_order=None, palette=None, vars=None, x_vars=None, y_vars=None, kind='scatter', diag_kind='auto', markers=None, height=2.5, aspect=1, corner=False, dropna=False, plot_kws=None, diag_kws=None, grid_kws=None, size=None)
+
+data, hue, height, dropna는 넘어가겠다.
+
+알아볼 것은 vars, kind, diag_kind, palette, hue_order, markers, aspect, corner, plot과 grid이다.
+
+kind : {‘scatter’, ‘kde’, ‘hist’, ‘reg’}
+Kind of plot to make.
+전의 jointplot과 동일하다 그래프의 형태를 나타내준다. 하지만 이 또한 가끔 에러가 뜬다. 이유는 각각 보여주고 있는 그래프들이 다르기 때문이다. pairplot은 기본적으로 다수의 그래프를 그리는데, 이 다수의 그래프를 대상으로 kind로 scatter을 해라고 하면 어떤건 distribution plot이고, 어떤건 hex plot인데, distribution plot은 scatter을 하기엔 적합하지 않다. 그리고 pairplot은 x와 y 축이 같은 이름을 가지면 distplot으로 변환된다. 일반적으로 scatter로 나타내어 진다.
+
+diag_kind : {‘auto’, ‘hist’, ‘kde’, None}
+Kind of plot for the diagonal subplots. If ‘auto’, choose based on whether or not hue is used.
+대각선 서브 플롯에 대한 플롯의 종류이다. '자동'인 경우 색조 사용 여부에 따라 선택한다. 색조가 사용되면 kde로, 색조가 없으면 hist로 한다. (hue는 색조라는 영어단어이고, diag는 대각선의 뜻을 가지는 diagonal의 약자이다.) 그러면 여기서 대각 플롯은 x와 y의 변수가 서로 같은 plot을 뜻하는데 해당 plot의 그래프 형태를 지정해주는 것이다.
+
+{x, y}_vars : lists of variable names
+Variables within data to use separately for the rows and columns of the figure; i.e. to make a non-square plot. 
+해당 x축과 y축에 들어갈 columns의 변수들을 list, set, dict형으로 넣을 수 있다. 하나만 넣을거면 그냥 string으로 쓰면된다.
+
+markers : single matplotlib marker code or list
+Either the marker 
+to use for all scatterplot points or a list of markers with a length the same as the number of levels in the hue variable 
+so that differently colored points will also have different scatterplot markers. 영어를 못하면 정말 읽기가 싫어지지만, 시작하면 포기하면 안된다. 나는 억지로라도 보고 있다. 해석하자면,
+그 표식자는 모든 산점도들의 점들에 사용되고 또
+색조 변수와 같은 크기의 list형의 표식자들은 다른 색깔의 점들에 다른 표식자들을 사용하기 위한 것이다.
+
+즉, 그냥 색조에 따라 marker을 조정해서 점형태를 바꿀 수 있고, 색조가 없는 plot도 marker를 지정할 수 있는데 하나로 지정할 수 있다는 것이다.
+
+해당 markers는 시각화에 매우 유용하여 자주 사용한다. 그러면 markers의 종류들을 살펴봐야하는데 해당 종류는 https://matplotlib.org/stable/api/markers_api.html에 가서 살펴보길 바란다... (다 적을 수가 없다.)
+
+aspect : 이건 내가 조정해봤는데, 그냥 가로 사이즈 를 늘리고 안늘리고 이다.
+
+hue_order : list of strings
+Order for the levels of the hue variable in the palette
+문자열들의 list이고, 요걸 통해 순서를 지정할 수 있다. 물론 list안엔 columns의 이름들이 들어가야한다.
+
+corner : bool
+If True, don’t add axes to the upper (off-diagonal) triangle of the grid, making this a “corner” plot.
+bool형이 들어가는데, 대각선 축을 기준으로 위에 있는 plot들을 전부 없앤다.(중복되기때문, 사실 vars 인자로 그걸 중복 안되게 설정할 수 있다. 하지만 corner는 그 중복의 여부를 체크하지 않고 그냥 대각선 위의 plot을 다 지운다.)
+
+{plot, grid}_kws : dicts
+Dictionaries of keyword arguments. plot_kws are passed to the bivariate plotting function, diag_kws are passed to the univariate plotting function, and grid_kws are passed to the PairGrid constructor.
+키워드 인수의 사전. plot_kws는 이변 량 플로팅 함수에 전달되고 diag_kws는 일 변량 플로팅 함수에 전달되며 grid_kws는 PairGrid 생성자에 전달됩니다. 
+

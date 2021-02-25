@@ -1,0 +1,71 @@
+jointplot : (*, x=None, y=None, data=None, kind='scatter', color=None, height=6, ratio=5, space=0.2, dropna=False, xlim=None, ylim=None, marginal_ticks=False, joint_kws=None, marginal_kws=None, hue=None, palette=None, hue_order=None, hue_norm=None, **kwargs)의 변수가 있다.
+
+거의 모든 seaborn plot들이 거의 주요 변수들은 동일하고 각각의 그래프 형태에 따라 인자가 바뀌는 것이므로 histplot에서 설명한 x, y, data, hue 등은 생략한다.
+
+jointplot에서는 xlim, ylim, ratio, height, space, dropna 그리고 제일 중요한 kind 인자가 있는데, 차례대로 천천히 살펴보자.
+
+{x, y}lim : pairs of numbers
+Axis limits to set before plotting.
+이라고 나와있다. 해석하면 축의 한계라는 뜻이다. 각각의 x, y 축의 범위를 말하는 것이다. 이는 튜플로 적을 수 있다. (list형도 되는지는 모르겠다.)
+
+ratio : numeric
+Ratio of joint axes height to marginal axes height. 일단 jointplot의 특징이 데이터의 분포를 그래프로 알려주고 그 데이터들이 어디에 밀집되어 있는지를 각 축의 맞은편에 그래프로 다시 그려준다. 그러면 총 3개의 그래프가 나오는 것이다. 여기서 맞은편 그래프들을 B그래프라고 하고, 기준 그래프를 A라고 하자. 그러면 A:B = ratio:1 비율로 그려준다. 그냥 기준 그래프의 크기를 정하는 거다 라고 알고 있자.
+
+height : numeric
+Size of the figure (it will be square). 말 그대로 그래프의 사이즈를 말한다.(height 니깐 높이를 말한다고 보면 될 것 같다. 정사각형이라 가로도 height랑 동일)
+
+space : numeric
+Space between the joint and marginal axes 해석하면, joint와 marginal axes 사이의 공간을 나타내는 숫자를 말한다.
+그러면 여기서 짚고 넘어가야 할 것이 있다. marginal axes에서 margin은 어떤 것과 어떤 것 사이의 거리를 얘기하는데, 그러면 axes와 joint간의 거리를 얘기한다. 라고 추측이 가능하다. 여기서 joint는 기준 그래프를 얘기한다.
+
+dropna : x의 값 또는 y의 값이 없는 데이터는 그려주지 않는다. 기본적으로 False가 되어 있다.
+
+kind : {"kde", "resid", "reg", "hex", "hist", "scatter"}
+각각의 변수에 따라 그래프 종류를 나타내는 문자열인데, 그래프 형태를 결정하는 중요한 인자다.
+kde(kenel distribution estimate)는 등고선을 그리며,
+resid는 데이터와 회귀선과의 거리를 종속변수로 가지는 그래프를 그리며,
+hist는 histogram을 뜻하며,
+scatter은 산점도인 데이터를 점들로 표현하여 나타내주고,
+hex는 kde의 그래프를 육각형으로 잘게 나누어 해당 육각형의 색을 진하게 하여, 밀집도를 시각화한다.
+마지막으로 reg 는 regression이 떠오르는 그래프이다. 바로 회귀선을 추정해주는 그래프이다.
+
+각각의 kind의 값들은 전부 hue를 포함할 수 없는 그래프도 있기에 쓰다보면 오류가 조금 날 수도 있다.
+
+
+실습 코드로 한번 여기서 짜보자면,
+
+penguins = sns.load_dataset("penguins")
+sns.jointplot(data=penguins, x="bill_length_mm", y="bill_depth_mm")
+
+penguins에 dataset을 넣고, 해당 dataset을 jointplot으로 그리는 코드이다. 여기서 load_dataset은 예제인데, 그 예제의 위치는 인터넷상의 repository에서 가져온다. 그럼 해당 repository에 penguins라는 dataset이 있어야하며, 인터넷도 연결되어야 하는 조건이 생긴다.
+
+쨋든 이건 알아가도 되고 안알아도 되는 그런 지식으로 알고 있고, jointplot을 보면 penguins데이터 셋을 그리고, x와 y는 해당 데이터 셋의 column 요소 값을 넣고 있다.
+
+조금 더 나아가서 다음 코드를 보자.
+
+sns.jointplot(
+    data=penguins, x="bill_length_mm", y="bill_depth_mm",
+    marker="+", s=100, marginal_kws=dict(bins=25, fill=False),
+)
+해당 코드는 marker, s, marginal_kws도 들어가 있다.
+
+이제 해당 인자들을 찾으면서 공부하면 된다.
+
+{joint, marginal}_kws : dicts
+Additional keyword arguments for the plot components.
+해석하면, 추가적인 키워드 인자들이다. 그림 요소들을 위한 인데, 여기서 딱 떠올라야 하는 것은 jointplot은 기본적으로 그래프 형태가 2개로 나뉘어지며, 그 그래프 2개의 형태를 조절할게 필요한데, 그걸 어떻게 조절하는가를 이 joint_kws, marginal_kws로 알려주고 있다. 그러면 여기서 dict에는 어떤게 들어가야 하는지 궁금할건데, marginal과 joint의 형태에 따라 넣어주면 된다. 즉 marginal은 축 맞은편의 그래프들인데 그 그래프들이 히스토그램이면 histplot이 가지고 있는 인자들을 넣어주면 된다는 것이다. 예를 들면, marginal_kws = dict(bins=100, fill=True) 이렇게 말이다. (bins는 구간을 몇 개로 나눌지 정하는 거다. fill은 막대 그래프를 채울지 말지를 정한다. joint_kws 도 똑같다.
+
+sns.jointplot(data=penguins, x="bill_length_mm", y="bill_depth_mm", height=5, ratio=2, marginal_ticks=True)
+marginal_ticks를 알아보자. marginal_ticks는 False로 하면 marginal 그래프의 세로축 (해당 수치를 정확히 나타내는 구분선)을 안보여주고, True로 하면 축도 그리며 그 축의 구간을 알아서 나눠 수치도 적어준다. 즉 marginal이 어떤 수치를 가지는지도 알려주는 것이다.
+
+g = sns.jointplot(data=penguins, x="bill_length_mm", y="bill_depth_mm")
+g.plot_joint(sns.kdeplot, color="r", zorder=0, levels=6)
+g.plot_marginals(sns.rugplot, color="r", height=-.15, clip_on=False)
+여기선 g라는 변수에 sns.jointplot() 객체를 저장하며, 해당 저장된 객체에서 인자들을 update하는 것이다. 보면, g.plot_joint는 joint(기준)그래프에 그래프를 하나 더 그리고, g.plot_marginals는 marginal이 있는곳에 그래프를 하나 더 그리는 것이다.
+
+여기서 알 수 있는건 그래프 각각은 객체로 되어 있다는 것이다.
+
+오늘은 여기까지!
+
+= 수정 = 
+2021-2-25 : 마지막 코드 수정함
