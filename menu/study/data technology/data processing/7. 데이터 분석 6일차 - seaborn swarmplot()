@@ -1,0 +1,29 @@
+seaborn.swarmplot(*, x=None, y=None, hue=None, data=None, order=None, hue_order=None, dodge=False, orient=None, color=None, palette=None, size=5, edgecolor='gray', linewidth=0, ax=None, **kwargs)
+
+이제 1번째 문제의 마지막 visualization으로 활용될 categorical plot이다. 마지막인 만큼 열심히 하자.
+
+x, y, hue, order, hue_order, dodge, orient, palette는 동일하다.
+edgecolor, size, linewidth, ax를 살펴보자.
+
+
+size : float, optional
+Radius of the markers, in points.
+해석하면 radius 반경(반지름)인데, 이 그래프는 데이터들이 marker들로 나오기 때문에 점들과 표식자들의 반지름으로 해석할 수 있겠다.
+
+edgecolor : matplotlib color, “gray” is special-cased, optional
+Color of the lines around each point. If you pass "gray", the brightness is determined by the color palette used for the body of the points.
+
+
+linewidth : float, optional
+Width of the gray lines that frame the plot elements.
+linewidth을 딱 보면 그냥 선굵기라고 느낄 수 있을 것이다. 그림 요소(marker)들의 테두리 굵기이다.
+
+
+ax : matplotlib Axes, optional
+Axes object to draw the plot onto, otherwise uses the current Axes.
+플롯을 그릴 axes 객채들을 명시해주면 해당 axes대로 그려준다. 이건 matplotlib을 알아야하므로 다음에 더 정확히 설명하겠다.
+
+여기서 dodge는 조금 다른데, plot들 마다 dodge가 True가 기본인게 있고, False가 기본인게 있다. 여기선 dodge가 False가 기본이기에 True로 바꾸면 hue에 맞춰서 분류하여 swarmplot을 그릴 수 있다.
+
+이제 문제의 data visualization을 끝마쳤다.
+나 스스로 수고했다고 전해주자.

@@ -2,3 +2,37 @@ seaborn.violinplot(*, x=None, y=None, hue=None, data=None, order=None, hue_order
 
 해당 객체는 신뢰구간, 분포 그래프, 중앙값, 4분위수 범위를 그려준다.
 x, y, hue, data, hue_order, dodge 들을 동일하며, bw, scale, gridsize, inner, split, order, scale_hue 를 볼 것이다.
+
+
+bw : {‘scott’, ‘silverman’, float}, optional
+Either the name of a reference rule or the scale factor to use when computing the kernel bandwidth. The actual kernel size will be determined by multiplying the scale factor by the standard deviation of the data within each bin.
+참조 규칙의 이름이며, 커널 대역폭을 계산할때 사용되는 비율 요소이다. 그 실제 커널 사이즈는 결정되어진다 각각의 bin안의 데이터의 표준편차들에의한 비율 요소의 곱들에 의해서
+말이 어렵다.. 실습으로 바로 들어가서 직접 해보면 해당 violinplot의 굴곡을 말한다. 0에 매우 가깝게하면, 해당 데이터들이 어떤 곳에 있는지 전부 자세히 보이며, 크게 하면, 굴곡이 극단적이지 않게 되어 부피감 있게 보인다. 즉, 자세히 보려면 0에 가깝게, 그냥 대충 감만 잡으려면 좀 크게 잡자. 그리고 scott와 silverman의 차이점이 거의 없는 것 같다...
+
+
+scale : {“area”, “count”, “width”}, optional
+The method used to scale the width of each violin. If area, each violin will have the same area. If count, the width of the violins will be scaled by the number of observations in that bin. If width, each violin will have the same width.
+scale은 각각의 violin폭의 비율을 사용하는 메소드이다. 만약 area속성이라면, 각각의 violin은 같은 영역(넓이)을 가지며, 만약 count속성이라면, violin들은 bin에 맞는 관측값들에 따라 조정될것이다. 만약 width속성이라면, 각각의 violin은 같은 넓이를 가질 것이다. 객관성을 가지려면 count가 적당한 듯하다... 기본값은 area로 되어 있다.
+
+
+scale_hue : bool, optional
+When nesting violins using a hue variable, this parameter determines whether the scaling is computed within each level of the major grouping variable (scale_hue=True) or across all the violins on the plot (scale_hue=False).
+색조 변수를 사용하여 violin을 중첩할때, 주요 그룹 변수(scale_hue = True일때) 또는 plot위의 모든 violin들을 가로지르는 이 2개의 각각 수준안에서 scaling은 계산 되는 것을 결정합니다. 해석을 잘 못하지만, 이해는 할 수 있다. 주요 그룹 변수라는 것은 x를 얘기하는 것이고, 플롯위의 바이올린 모두라는 것은 아마 hue도 포함하여 scaling을 계산한다는 소리이다.
+따라서 hue도 violin의 뚱뚱한 것과, 안 뚱뚱해지는 것에 요인을 미치게 할 수 있다는 것이다. 기존 값은 True로 되어 있다.
+
+
+gridsize : int, optional
+Number of points in the discrete grid used to compute the kernel density estimate.
+100이면 100%이고, 1이면 1%이다. grid의 사이즈를 얘기하는 거면,  수치형 범주를 나타내는 y의 구간을 정하는 거라고 봐도 좋다.
+
+inner : {“box”, “quartile”, “point”, “stick”, None}, optional
+Representation of the datapoints in the violin interior. If box, draw a miniature boxplot. If quartiles, draw the quartiles of the distribution. If point or stick, show each underlying datapoint. Using None will draw unadorned violins.
+violin안에 있는 통계값들을 나타내는 방법같은 것이다.
+기본이 box이며, quartile은 사분위수를 나타내주고, point는 데이터들이 존재하는 곳에 점을 찍으며, stick또한 데이터가 존재하는 곳에 선을 그려준다.
+
+
+split : bool, optional
+When using hue nesting with a variable that takes two levels, setting split to True will draw half of a violin for each level. This can make it easier to directly compare the distributions.
+True로 하면, hue로 나뉘어진 두개의 violin을 반으로 각각 짤라 붙여주면서 비교하기 쉽게 해준다. 기본값은 False이다.
+
+이렇게 violinplot을 알아봤다.
