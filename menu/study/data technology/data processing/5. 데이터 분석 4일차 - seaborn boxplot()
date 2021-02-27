@@ -1,0 +1,28 @@
+seaborn.boxplot(*, x=None, y=None, hue=None, data=None, order=None, hue_order=None, orient=None, color=None, palette=None, saturation=0.75, width=0.8, dodge=True, fliersize=5, linewidth=None, whis=1.5, ax=None, **kwargs)
+
+x, y, hue, data, hue_order 동일,
+
+
+palette : palette name, list, or dict
+Colors to use for the different levels of the hue variable. Should be something that can be interpreted by color_palette(), or a dictionary mapping hue levels to matplotlib colors.
+palette 인자를 보고 가자. seaborn에서는 다양한 어울리는 색상을 덩어리로 제공해준다. https://seaborn.pydata.org/generated/seaborn.color_palette.html#seaborn.color_palette 해당 링크로 가면 많은 색상을 참고할 수 있다. 웹 문서를 보면 seaborn.color_palette()로 색을 반환해준다. 따라서 palette = sns.color_palette()형식으로 넣어주면된다.
+
+좋은 색감들을 외우고 가자.
+sns.color_palette("pastel")
+sns.color_palette("husl", 9) <- husl의 9개의 색상을 가져 온다.
+sns.color_palette("Set2")
+sequential_colors = sns.color_palette("RdPu", 10)
+sns.color_palette("flare", as_cmap=True)
+sns.color_palette("ch:s=.25,rot=-.25")
+sns.color_palette("light:#5A9")
+sns.color_palette("RdBu", 10)
+여기서 as_cmap을 쓰면 해당 color_palette는 iteration이 아니기 때문에 boxplot에서는 사용을 못할 것이다. as_cmap은 색상을 밝은쪽부터 진한쪽까지 보여준다. 잘 쓰는법은 해당 palette=sns.color_palette(색상, (bar, box)의 개수) 를 쓴다.
+
+
+whis : float, optional
+Proportion of the IQR past the low and high quartiles to extend the plot whiskers. Points outside this range will be identified as outliers.
+whis는 이상값의 기준을 정할 수 있게 해주는 아이다. 만약 [10,90]을 넣으면 10백분위수와 90백분위수를 벗어나는 데이터들을 이상값으로 분류한다.
+
+saturation : float, optional
+Proportion of the original saturation to draw colors at. Large patches often look better with slightly desaturated colors, but set this to 1 if you want the plot colors to perfectly match the input color spec.
+채도를 말하며 0이상 1이하로 지정한다.

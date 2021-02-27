@@ -132,6 +132,7 @@ form#write{
     border : none;
     scroll-behavior: smooth;
     padding :5px;
+    resize : none;
 }
 #path {
     font-size : 1.5em;
@@ -140,6 +141,7 @@ form#write{
     font-size: 1.2em;
     height : 45vh;
     width : 100%;
+    resize : none;
 }
 input{
     border: 1px solid grey;
