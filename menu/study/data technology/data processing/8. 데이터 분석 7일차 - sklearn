@@ -1,13 +1,62 @@
-우리는 데이터를 전부 수치로 나타내면 정말 다루기 좋겠지만, 사실상 데이터의 형태는 매우 다양하여, 전부 사전처리(preprocessing)이 필요하다. 해당 라이브러리 scikit learn은 머신러닝 뿐만 아니라 preprocessing을 위한 메소드도 제공하고 있다.
+우리는 데이터를 전부 수치로 나타내면 정말 다루기 좋겠지만, 사실상 데이터의 형태는 매우 다양하여, 전부 사전처리(Processing)가 필요하다. 해당 라이브러리 scikit learn은 머신러닝 뿐만 아니라 Processing을 위한 메소드도 제공하고 있다.
 
-chapter1로 데이터 분석으로 심부전증을 예방할 수 있을까? 가 목적이다. 이를 위해 시각화 > 전처리 > 학습 > Classification 모델 생성 > 모델 학습 결과 평가 순인데, 일단 나는 시각화를 열심히 했다. 정말 잘한 것이다. 이미 나는 과정 중에 6단계중 1단계를 벌써 완료 했다. 겨우 7일 만에 말이다. 이제 데이터를 학습에 맞게 preprocessing을 해보자.
+Chapter 1로 데이터 분석으로 심부전증을 예방할 수 있을까? 가 목적이다. 이를 위해 Visualization > Processing > Learning > Classification 모델 생성 > 모델 학습 결과 평가 순인데, 일단 나는 시각화를 매우 자세히 들여다 보았으며, 과정 중에 6단계중 1단계를 벌써 완료 했다. 겨우 7일 만에 말이다. 잡담은 관두고, 이제 데이터를 학습에 맞게 processing을 해보자.
 
-하기 전에 우리는 수치형 데이터, 범주형 데이터가 DEATH_EVENT와 상관관계가 있는 데이터를 찾아야하는데,,, 일단 나는 수치형은 
+하기 전에 우리는 수치형 데이터, 범주형 데이터가 DEATH_EVENT와 상관관계가 있는 데이터를 찾아야하는데,,, 나는 이 분야의 도메인 전문가가 아니기에 캐글 데이터의 결과물을 보고 해당 변수로 learning하려고 한다.
+
 다음과 같이 문제가 시작된다.
 from sklearn.linear_model import StandardScaler
 
 #수치형 입력 데이터, 범주형 입력 데이터, 출력 데이터로 구분하기
 
-X_num = 
-Y_num = 
-y = 
+여기서 수치형과 범주형은 서로 데이터 타입이 다르다.
+Boolean형은 0과 1만 갖기에 processing이 필요없다. 여기서 범주형들은 전부 Boolean형이기에 DataFrame으로 나누어주면
+
+X_num = df[['age','creatinine_phosphokinase','ejection_fraction','platelets','serum_creatinine']]
+X_cat = df[['anaemia','diabetes','high_blood_pressure','sex','smoking']]
+y = df['DEATH_EVENT']
+
+이렇게 인덱싱을 활용하여 나눈다. pandas에서는 열을 인덱싱 대상으로 쓸 수 있는데, 행을 대상으로 할려면 iloc, loc을통해 할 수 있다. 자세한건 Study메뉴에 computer python을 참고하자.
+
+해당 데이터는 실제 데이터이며, train데이터와 test데이터가 따로 없기에, 실제 데이터를 2:1로 나누어서 적용하는 방식으로 하면 될 듯 하다.
+
+이제 수치형과 boolean형으로 나누고, 결과값인 y도 보았다.
+다음 문제는 
+
+# 수치형 입력 데이터를 전처리(Processing)하고 입력 데이터 통합(Integration)하기
+
+전처리 과정은 scikit learn이고, 통합은 데이터 핸들링으로 pandas쪽에서 한다.
+
+import sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+scaler.fit(X_num)
+X_scaled = scaler.transform(X_num)
+X_scaled = pd.DataFrame(data = X_scaled, index = X_num.index, columns = X_num.columns)
+
+X = pd.concat([X_scaled, X_cat], axis=1)
+
+자... 갑자기 모르는 코드가 매우 많이 늘어났다. 우리는 ㅣㅈ금 이 코드를 해석해야한다. 이것이 해당 문제 1번의 전처리 과정의 전부이다. 천천히 sklearn의 공식홈페이지 api를 참조하여 해석해나가자.
+
+from sklearn.preprocessing import StandardScaler
+해당 코드는 sklearn.preprocessing 패키지에서 StandardScaler을 불러와라 라는 뜻인데, 모듈 전체를 임포트 하는 것 보다 쓸 요소 하나만 불러오는게 더 효율적이고, 의미론적으로 봐도 누구나 알 수 있기에 저렇게 쓴다.
+
+sklearn.model_selection.train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None)
+
+*arrays : sequence of indexables with same length / shape[0]
+Allowed inputs are lists, numpy arrays, scipy-sparse matrices or pandas dataframes.
+
+test_size : float or int, default=None
+If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the test split. If int, represents the absolute number of test samples. If None, the value is set to the complement of the train size. If train_size is also None, it will be set to 0.25.
+
+train_size : float or int, default=None
+If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the train split. If int, represents the absolute number of train samples. If None, the value is automatically set to the complement of the test size.
+
+random_state : int, RandomState instance or None, default=None
+Controls the shuffling applied to the data before applying the split. Pass an int for reproducible output across multiple function calls. See Glossary.
+
+shuffle : bool, default=True
+Whether or not to shuffle the data before splitting. If shuffle=False then stratify must be None.
+
+stratify : array-like, default=None
+If not None, data is split in a stratified fashion, using this as the class labels. Read more in the User Guide.
