@@ -1,0 +1,26 @@
+sklearn.model_selection.train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None)
+딱 보면 train과 test로 나누다 라는 의미이다.
+
+*arrays : sequence of indexables with same length / shape[0]
+Allowed inputs are lists, numpy arrays, scipy-sparse matrices or pandas dataframes.
+arrays들이 들어가는데, 여기서 주의할 점은 1차원만 갈라준다. 만약 X가 있으면 test_size=0.3으로 했을 때, 1차원만 영향이 간다는 소리이다.
+
+test_size : float or int, default=None
+If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the test split. If int, represents the absolute number of test samples. If None, the value is set to the complement of the train size. If train_size is also None, it will be set to 0.25.
+말그대로 검증데이터 셋의 크기인데, 없으면 0.25가 된다.
+
+train_size : float or int, default=None
+If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the train split. If int, represents the absolute number of train samples. If None, the value is automatically set to the complement of the test size.
+위와 동일하다.
+
+random_state : int, RandomState instance or None, default=None
+Controls the shuffling applied to the data before applying the split. Pass an int for reproducible output across multiple function calls. See Glossary.
+random_state는 random seed와 동일하다고 생각하면 된다.
+
+shuffle : bool, default=True
+Whether or not to shuffle the data before splitting. If shuffle=False then stratify must be None.
+shuffle은 섞을지 말지를 결정하는데, 만약에 shuffle을 False로 두면, 섞이지 않기 때문에 데이터 셋의 객관성을 더 높일 수 없을 것이다.
+
+stratify : array-like, default=None
+If not None, data is split in a stratified fashion, using this as the class labels. Read more in the User Guide.
+stratify는 층화라는 소리이다. 사실 잘은 몰라도 되는 인자인데, 더 자세히 알고 싶다면 guid를 참고하라고 한다.

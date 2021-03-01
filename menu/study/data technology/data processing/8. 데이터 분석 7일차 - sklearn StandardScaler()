@@ -1,0 +1,98 @@
+우리는 데이터를 전부 수치로 나타내면 정말 다루기 좋겠지만, 사실상 데이터의 형태는 매우 다양하여, 전부 사전처리(Processing)가 필요하다. 해당 라이브러리 scikit learn은 머신러닝 뿐만 아니라 Processing을 위한 메소드도 제공하고 있다.
+
+Chapter 1로 데이터 분석으로 심부전증을 예방할 수 있을까? 가 목적이다. 이를 위해 Visualization > Processing > Learning > Classification 모델 생성 > 모델 학습 결과 평가 순인데, 일단 나는 시각화를 매우 자세히 들여다 보았으며, 과정 중에 6단계중 1단계를 벌써 완료 했다. 겨우 7일 만에 말이다. 잡담은 관두고, 이제 데이터를 학습에 맞게 processing을 해보자.
+
+하기 전에 우리는 수치형 데이터, 범주형 데이터가 DEATH_EVENT와 상관관계가 있는 데이터를 찾아야하는데,,, 나는 이 분야의 도메인 전문가가 아니기에 캐글 데이터의 결과물을 보고 해당 변수로 learning하려고 한다.
+
+다음과 같이 문제가 시작된다.
+from sklearn.linear_model import StandardScaler
+
+#수치형 입력 데이터, 범주형 입력 데이터, 출력 데이터로 구분하기
+
+여기서 수치형과 범주형은 서로 데이터 타입이 다르다.
+Boolean형은 0과 1만 갖기에 processing이 필요없다. 여기서 범주형들은 전부 Boolean형이기에 DataFrame으로 나누어주면
+
+X_num = df[['age','creatinine_phosphokinase','ejection_fraction','platelets','serum_creatinine']]
+X_cat = df[['anaemia','diabetes','high_blood_pressure','sex','smoking']]
+y = df['DEATH_EVENT']
+
+이렇게 인덱싱을 활용하여 나눈다. pandas에서는 열을 인덱싱 대상으로 쓸 수 있는데, 행을 대상으로 할려면 iloc, loc을통해 할 수 있다. 자세한건 Study메뉴에 computer python을 참고하자.
+
+해당 데이터는 실제 데이터이며, train데이터와 test데이터가 따로 없기에, 실제 데이터를 2:1로 나누어서 적용하는 방식으로 하면 될 듯 하다.
+
+이제 수치형과 boolean형으로 나누고, 결과값인 y도 보았다.
+다음 문제는 
+
+# 수치형 입력 데이터를 전처리(Processing)하고 입력 데이터 통합(Integration)하기
+
+전처리 과정은 scikit learn이고, 통합은 데이터 핸들링으로 pandas쪽에서 한다.
+
+import sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+scaler.fit(X_num)
+X_scaled = scaler.transform(X_num)
+X_scaled = pd.DataFrame(data = X_scaled, index = X_num.index, columns = X_num.columns)
+
+X = pd.concat([X_scaled, X_cat], axis=1)
+
+자... 갑자기 모르는 코드가 매우 많이 늘어났다. 우리는 지금 이 코드를 해석해야한다. 이것이 해당 문제 1번의 전처리 과정의 전부이다. 천천히 sklearn의 공식홈페이지 api를 참조하여 해석해나가자.
+
+from sklearn.preprocessing import StandardScaler
+해당 코드는 sklearn.preprocessing 패키지에서 StandardScaler을 불러와라 라는 뜻인데, 모듈 전체를 임포트 하는 것 보다 쓸 요소 하나만 불러오는게 더 효율적이고, 의미론적으로 봐도 누구나 알 수 있기에 저렇게 쓴다.
+
+class sklearn.preprocessing.StandardScaler(*, copy=True, with_mean=True, with_std=True)
+
+class로 객체이다. 나는 객체를 하나의 기계라고 생각한다. 따라서 다음과 같이 생각한다. 해당 X셋을 넣으면 z = (x - u) / s 로 정규화 시켜주는 박스 같은 함수이다. 그러면 우리는 X셋을 넣어주는 방법을 배워야하는데, 해당 기계안에 그 기능이 다 들어가 있다.
+
+Arguments : 
+copy : bool, default=True
+If False, try to avoid a copy and do inplace scaling instead. This is not guaranteed to always work inplace; e.g. if the data is not a NumPy array or scipy.sparse CSR matrix, a copy may still be returned.
+copy가 False면, 해당 실제 데이터가 저장되어 있는 게 대체되어 진다. 이것은 잘 선호하는 방식이 아니다. 예를 들어 그 데이터가 numpy array이거나 scipy.spares의 CSR메트릭스가 아니라면, 복사는 그 상태를 유지한 채 반환된다. 즉, numpy로 반환이 안된다는 소리이다. 따라서 copy는 항상 True로 두는게 맞다고 본다.
+
+with_mean : bool, default=True
+If True, center the data before scaling. This does not work (and will raise an exception) when attempted on sparse matrices, because centering them entails building a dense matrix which in common use cases is likely to be too large to fit in memory.
+여기에는 True로 한다면, 데이터가 scaling되기 전에 중심을 자동으로 잡아준다. 즉, 평균값을 잡아준다는 소리이다. 건드리지 말자.
+
+with_std : bool, default=True
+If True, scale the data to unit variance (or equivalently, unit standard deviation).
+이것도 위와 마찬가지다. 표준편차를 자동으로 잡아준다.
+
+
+
+Attributes : 
+
+scale_ : ndarray of shape (n_features,) or None
+Per feature relative scaling of the data to achieve zero mean and unit variance. Generally this is calculated using np.sqrt(var_). If a variance is zero, we can’t achieve unit variance, and the data is left as-is, giving a scaling factor of 1. scale_ is equal to None when with_std=False.
+scale_ndarray는 scaled된 ndarray를 볼 수 있다. 그것 뿐이다. 하지만 아무 것도 없는 기계에서 scale_ndarray를 호출하면, 당연히 에러가 날 것이다. 이 데이터를 넣어주는게 바로 밑에서 볼 Methods의 fit이다.
+
+mean_ : ndarray of shape (n_features,) or None
+The mean value for each feature in the training set. Equal to None when with_mean=False.
+각각의 훈련 set안에 있는 변수들의 평균값들을 반환한다. 만약 with_mean=False면 None을 반환한다.
+
+var_ : ndarray of shape (n_features,) or None
+The variance for each feature in the training set. Used to compute scale_. Equal to None when with_std=False.
+위와 마찬가지이다 훈련 set안에 있는 변수들의 분산들을 반환한다. 만약 with_std= False이면 None을 반환한다.
+
+n_samples_seen_int or ndarray of shape (n_features,)
+The number of samples processed by the estimator for each feature. If there are no missing samples, the n_samples_seen will be an integer, otherwise it will be an array of dtype int. If sample_weights are used it will be a float (if no missing data) or an array of dtype float that sums the weights seen so far. Will be reset on new calls to fit, but increments across partial_fit calls.
+사실 이 Attributes가 정말 해석해도 모르겠는 속성이다. 한번 실습으로 해보자.
+
+
+
+Methods : 
+
+fit(X[, y, sample_weight]) : 데이터 셋을 기계 안으로 집어 넣는다. 리턴 값은 실습을 하면서 보자.
+
+fit_transform(X[, y]) : 데이터 셋을 집어 넣고 변환하여 반환한다. 리턴 값은 scaling된 numpy.array를 반환한다.
+
+get_params([deep]) : hyper parameter들을 얻을 수 있다. 리턴 값은 dict형으로 반환한다.
+
+inverse_transform(X[, copy]) : 데이터 셋을 변환하기 전으로, 즉 원시 상태로 반환한다. np.ndarray형태로 반환한다.
+
+partial_fit(X[, y, sample_weight]) : Online computation of mean and std on X for later scaling. 이는 실시간으로 X를 scaling을 위해 mean과 X를 계산을 수행할 수 있게 하는 놈이다. object를 반환하는데 한번 실습때 보자.
+
+set_params(**params) : 해당 기능들(var_, mean_을 수정할 수 있다!) 넣는건 dict형태로 넣으면 잘 적용된다.
+
+transform(X[, copy]) : 정규화를 진행하여, 데이터를 중앙으로 정리한다. 마찬가지로 np.ndarray로 반환한다.
+
