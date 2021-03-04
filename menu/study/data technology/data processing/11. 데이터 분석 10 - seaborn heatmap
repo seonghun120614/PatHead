@@ -1,0 +1,60 @@
+seaborn.heatmap(data, *, vmin=None, vmax=None, cmap=None, center=None, robust=False, annot=None, fmt='.2g', annot_kws=None, linewidths=0, linecolor='white', cbar=True, cbar_kws=None, cbar_ax=None, square=False, xticklabels='auto', yticklabels='auto', mask=None, ax=None, **kwargs)
+
+
+데이터 시각화를 하기 위한 그래프 유형중 heatmap을 살펴보자. heatmap은 데이터의 정도를 색의 진함으로 표현한 그래프이다. 주로 정사각행렬 데이터에대해 쓰인다. 
+
+data는 어딜가나 동일한 것 같다. (seaborn api를 보면서 느낀점이다.)
+
+vmin, vmax : floats, optional
+Values to anchor the colormap, otherwise they are inferred from the data and other keyword arguments.
+직관적으로 보자면 vertical min, vertical max를 뜻하는 것 같다. 해석을 해보자면, colormap을 고정할 값이며, 정하지 않으면 그들은 데이터, 기타 키워드 인자들에서 유추하여 값을 임의로 정하는 듯하다. colormap은 뒤에 나올 것이지만, 일단 사전에 설명하자면 색을 나타내는데, 그렇게 본다면 색의 진함과 연함의 정도의 범위를 나타낸다고 볼 수 있다.
+
+cmap : matplotlib colormap name or object, or list of colors, optional
+The mapping from data values to color space. If not provided, the default will depend on whether center is set.
+colormap이다. matplotlib에서 지원하는 색 이름들을 써넣어 마음에 드는 색을 정할 수 있다. 
+
+center : float, optional
+The value at which to center the colormap when plotting divergant data. Using this parameter will change the default cmap if none is specified.
+색의 중앙을 지정하는 숫자를 넣으면 된다. 만약 내가 연두색이 중앙인 colormap을 적용했다면, 연두색을 어느 수치에 넣어줄지 여기서 정하면 된다.
+
+robust : bool, optional
+If True and vmin or vmax are absent, the colormap range is computed with robust quantiles instead of the extreme values.
+만약 True면 vmin또는 vmax들은 결측이고, colormap의 범위는 극한값 대신에 강력한 분위수로 계산됩니다. (사분위수, 백분위수)
+
+annot : bool or rectangular dataset, optional
+If True, write the data value in each cell. If an array-like with the same shape as data, then use this to annotate the heatmap instead of the data. Note that DataFrames will match on position, not index.
+만약 True면, 각각의 색위에 수치를 시각화 해준다. 그것뿐이다. 매우 유용하게 쓰임!
+
+fmt : str, optional
+String formatting code to use when adding annotations.
+annot을 추가 할 때 사용할 문자열 형식화 코드다. 정수형이면 'd', 실수면 'f'를 사용하면 된다.
+
+linewidths : float, optional
+Width of the lines that will divide each cell
+실수형으로 들어가며, 색간의 거리(css로 치면 margin)을 뜻함
+
+linecolor : color, optional
+Color of the lines that will divide each cell.
+말 그대로 선 색깔이다.
+
+cbar : boolean, optional
+Color of the lines that will divide each cell.
+cmap에 해당되는 색상들을 vmin부터 vmax까지 색깔 막대기를 그려준다.
+기본적으로 True로 되어 있어서 보여짐.
+
+주로 사용하는 것은 여기까지이다.
+
+실습코드
+grid_kws = {"height_ratios": (.9, .05), "hspace": .3}
+f, (ax, cbar_ax) = plt.subplots(2, gridspec_kw=grid_kws)
+ax = sns.heatmap(flights, ax=ax,
+                 cbar_ax=cbar_ax,
+                 cbar_kws={"orientation": "horizontal"})
+
+
+corr = np.corrcoef(np.random.randn(10, 200))
+mask = np.zeros_like(corr)
+mask[np.triu_indices_from(mask)] = True
+with sns.axes_style("white"):
+    f, ax = plt.subplots(figsize=(7, 5))
+    ax = sns.heatmap(corr, mask=mask, vmax=.3, square=True)
